@@ -3,16 +3,18 @@ from threading import Thread
 from blessed import Terminal
 from rich.text import Text
 
+from .base import DungeonBase
 from .level import Level
 
 # Used to get player input
 term = Terminal()
 
 
-class Character:
+class Character(DungeonBase):
     """This describes a character"""
 
     def __init__(self, current_level: Level, symbol: str = "$") -> None:
+        super().__init__()
         self.current_level = current_level
         self.x = current_level.width // 2
         self.y = current_level.height // 2

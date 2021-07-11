@@ -1,10 +1,13 @@
 from .character import Character 
+from .base import DungeonBase
 
-class DungeonItem(Character):
+class DungeonItem(DungeonBase):
+    used_items = []
+    unused_items = []
 
-    def __init__(self, x, y, symbol, color):
-        super().__init__(x, y, symbol)
-        self.symbol.stylize(f'bold {color}')
+    def __init__(self,*args):
+        super().__init__(*args)
+        
 
     def check_for_collision(self, player):
         # if player location is the same
