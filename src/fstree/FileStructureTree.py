@@ -1,6 +1,6 @@
 from os import scandir
 
-from fstree.Node import Node
+from src.fstree.Node import Node
 
 
 class FileStructureTree:
