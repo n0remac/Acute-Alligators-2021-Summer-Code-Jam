@@ -1,4 +1,4 @@
-from .base import AbstractDungeonEntity
+from .AbstractDungeonEntity import AbstractDungeonEntity
 from .character import Character
 
 

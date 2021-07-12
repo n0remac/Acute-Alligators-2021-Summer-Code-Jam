@@ -2,7 +2,7 @@ from threading import Thread
 
 from blessed import Terminal
 
-from .base import AbstractDungeonEntity
+from .AbstractDungeonEntity import AbstractDungeonEntity
 from .level import Level
 
 # Used to get player input
