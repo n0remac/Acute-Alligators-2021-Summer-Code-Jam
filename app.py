@@ -5,7 +5,6 @@ from rich.live import Live
 from rich.panel import Panel
 
 from src.resources.character import Character
-from src.resources.items import AbstractDungeonItem
 from src.resources.level import Level
 
 
@@ -15,7 +14,6 @@ def run_game(layout: Layout) -> Panel:
 
     Layout: Layout  Holds all the rich renderables for the game. Updated with a new panel each tick.
     """
-    dungeon_item.draw(level.board)
     player.draw()
     panel = Panel(level.to_string())
     layout.update(panel)
@@ -26,8 +24,6 @@ def run_game(layout: Layout) -> Panel:
 level = Level(10, 10, [1, 2, 3, 4], [])
 player = Character(level, "$")
 player.start()
-
-dungeon_item = AbstractDungeonItem(x=2, y=2, symbol="@", color="green")
 
 game_panel = Panel(level.to_string())
 layout = Layout(game_panel)
