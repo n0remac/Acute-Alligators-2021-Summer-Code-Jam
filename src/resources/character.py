@@ -1,5 +1,6 @@
 from .base import DungeonBase
 
+
 class Character(DungeonBase):
     """This describes a character"""
 
@@ -11,5 +12,3 @@ class Character(DungeonBase):
                 self.x += direction[0]
             if self.y + direction[1] <= 9 and self.y + direction[1] >= 0:
                 self.y += direction[1]
-
-

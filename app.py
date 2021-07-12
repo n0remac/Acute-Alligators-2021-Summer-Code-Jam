@@ -5,8 +5,8 @@ from rich.layout import Layout
 from rich.live import Live
 from rich.panel import Panel
 
-from src.resources.items import DungeonItem
 from src.resources.character import Character
+from src.resources.items import DungeonItem
 from src.resources.map import Level
 
 # Used to get player input
@@ -29,7 +29,7 @@ def run_game(layout: Layout) -> None:
 # This a temporary home for these game objects. they should be moved to a better place.
 level = Level(10, 10)
 player = Character(2, 2, "$")
-dungeon_item = DungeonItem(5,5,"@", "green")
+dungeon_item = DungeonItem(5, 5, "@", "green")
 
 panel = Panel(level.to_string(), width=14, height=12)
 main_layout = Layout(panel)
