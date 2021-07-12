@@ -24,7 +24,7 @@ class Level:
                 row.append(text)
             self.board.append(row)
 
-    def add_doors(self, doors: list) -> None:
+    def add_doors(self, doors: int) -> None:
         """Add doors to level"""
         door_direction = ["right", "bottom", "left"]
         while doors > 0:
