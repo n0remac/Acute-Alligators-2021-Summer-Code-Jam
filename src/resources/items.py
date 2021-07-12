@@ -1,15 +1,15 @@
-from .base import DungeonBase
+from .base import AbstractDungeonEntity
 from .character import Character
 
 
-class DungeonItem(DungeonBase):
+class AbstractDungeonItem(AbstractDungeonEntity):
     """Dungeon Items that change players color if captured"""
 
     used_items = []
     unused_items = []
 
-    def __init__(self, *args):
-        super().__init__(*args)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     def check_for_collision(self, player: Character) -> None:
         """Compares player's location to Dungeon Item"""

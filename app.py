@@ -5,7 +5,7 @@ from rich.live import Live
 from rich.panel import Panel
 
 from src.resources.character import Character
-from src.resources.items import DungeonItem
+from src.resources.items import AbstractDungeonItem
 from src.resources.level import Level
 
 
@@ -27,7 +27,7 @@ level = Level(10, 10, [1, 2, 3, 4], [])
 player = Character(level, "$")
 player.start()
 
-dungeon_item = DungeonItem(2, 2, "@", "green")
+dungeon_item = AbstractDungeonItem(x=2, y=2, symbol="@", color="green")
 
 game_panel = Panel(level.to_string())
 layout = Layout(game_panel)

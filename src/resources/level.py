@@ -31,13 +31,13 @@ class Level:
             direction: str = choice(door_direction)
             x: int = 0
             y: int = 0
-            if direction == 'right':
+            if direction == "right":
                 y = randint(1, self.height - 2)
                 x = self.width - 1
-            if direction == 'bottom':
+            if direction == "bottom":
                 x = randint(1, self.width - 2)
                 y = self.height - 1
-            if direction == 'left':
+            if direction == "left":
                 y = randint(1, self.height - 2)
                 x = 0
 

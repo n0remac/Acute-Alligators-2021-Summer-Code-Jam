@@ -1,25 +1,25 @@
 from threading import Thread
 
 from blessed import Terminal
-from rich.text import Text
 
-from .base import DungeonBase
+from .base import AbstractDungeonEntity
 from .level import Level
 
 # Used to get player input
 term = Terminal()
 
 
-class Character(DungeonBase):
+class Character(AbstractDungeonEntity):
     """This describes a character"""
 
     def __init__(self, current_level: Level, symbol: str = "$") -> None:
-        super().__init__()
+        super().__init__(
+            ground_symbol=current_level.board[current_level.width // 2][current_level.height // 2],
+            x=current_level.width // 2,
+            y=current_level.height // 2,
+            symbol=symbol
+        )
         self.current_level = current_level
-        self.x = current_level.width // 2
-        self.y = current_level.height // 2
-        self.symbol = Text(symbol)
-        self.ground_symbol = current_level.board[self.y][self.x]
         self.playing = True
 
     def start(self) -> None:
