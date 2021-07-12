@@ -2,6 +2,7 @@ from rich.text import Text
 
 
 class DungeonBase:
+    """Base class to set items color and location"""
 
     def __init__(self, x: int = 0, y: int = 0, symbol: str = "$", color: str = ''):
         self.x = x
