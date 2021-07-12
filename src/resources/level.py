@@ -1,4 +1,4 @@
-from random import choice, randint
+from random import randint
 
 from rich.text import Text
 
@@ -26,18 +26,17 @@ class Level:
 
     def add_doors(self, doors: int) -> None:
         """Add doors to level"""
-        door_direction = ["right", "bottom", "left"]
-        while doors > 0:
-            direction: str = choice(door_direction)
+        while doors:
+            direction: int = randint(0, doors) % 3
             x: int = 0
             y: int = 0
-            if direction == "right":
+            if direction == 2:
                 y = randint(1, self.height - 2)
                 x = self.width - 1
-            if direction == "bottom":
+            if direction == 1:
                 x = randint(1, self.width - 2)
                 y = self.height - 1
-            if direction == "left":
+            if direction == 0:
                 y = randint(1, self.height - 2)
                 x = 0
 
