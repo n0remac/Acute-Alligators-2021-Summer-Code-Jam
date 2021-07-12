@@ -5,7 +5,7 @@ from .level import Level
 
 
 class Enemy(AbstractDungeonEntity):
-    """Enemy entity - hostile to players"""
+    """Enemy entity and hostile to players"""
 
     def __init__(self, current_level: Level, symbol: str = '^') -> None:
         super().__init__(
