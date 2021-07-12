@@ -1,12 +1,6 @@
 from .entities.character import Character
-<<<<<<< HEAD
-<<<<<<< HEAD
 from .entities.enemy import Enemy
-=======
->>>>>>> eec79cb (reorganizing app)
-=======
-from .entities.enemy import Enemy
->>>>>>> d9331e0 (Updated game_resources)
+from .entities.ColorChanger import ColorChanger
 from .level import Level
 
 
@@ -17,11 +11,8 @@ class GameResources:
         self.level = Level(10, 10, [1, 2, 3, 4], [])
         self.player = Character(self.level, "$")
         self.player.start()
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> d9331e0 (Updated game_resources)
         self.test_enemy = Enemy(self.level)
+        self.test_color_changer = ColorChanger(self.level, x=2, y=2, symbol='@')
 
     def draw(self) -> None:
         """
@@ -31,8 +22,4 @@ class GameResources:
         """
         self.test_enemy.draw()
         self.player.draw()
-<<<<<<< HEAD
-=======
->>>>>>> eec79cb (reorganizing app)
-=======
->>>>>>> d9331e0 (Updated game_resources)
+        self.test_color_changer.draw()
