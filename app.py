@@ -30,8 +30,8 @@ tree = FileStructureTree('.')
 current_node = tree.root
 level = Level(10, 10, current_node.children, current_node.files)
 player = Character(level, "$")
-for i in current_node.files:
-    globals()[i.name[:-3]] = Enemy(level, "^")
+for i in range(len(current_node.files) if len(current_node.files) <= 10 else 10):
+    globals()[current_node.files[i].name[:-3]] = Enemy(level, "^")
 
 player.start()
 
