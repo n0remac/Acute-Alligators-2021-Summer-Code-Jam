@@ -4,14 +4,6 @@ from rich.layout import Layout
 from rich.live import Live
 from rich.panel import Panel
 
-<<<<<<< HEAD
-from src.resources.GameResources import GameResources
-=======
-from src.fstree.FileStructureTree import FileStructureTree
-from src.resources.character import Character
-from src.resources.enemy import Enemy
->>>>>>> eec79cb (reorganizing app)
-
 from src.resources.GameResources import GameResources
 
 
@@ -21,9 +13,7 @@ def run_game(layout: Layout, game_resources: GameResources) -> Panel:
 
     Layout: Layout  Holds all the rich renderables for the game. Updated with a new panel each tick.
     """
-
     game_resources.draw()
-
     panel = Panel(game_resources.level.to_string())
     layout.update(panel)
     sleep(0.1)
