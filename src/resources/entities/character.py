@@ -48,7 +48,10 @@ class Character(AbstractDungeonEntity):
 
     def release(self, key: Key) -> bool:
         """On key release"""
-        if key not in ('w', 'a', 's', 'd', 'p'):
+        try:
+            if key.char not in ('w', 'a', 's', 'd', 'p'):
+                self.playing = False
+        except AttributeError:
             self.playing = False
         return False
 
