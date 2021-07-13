@@ -16,15 +16,18 @@ class GameResources:
         self.enemy_manager = EnemyManager(self.level)
         self.enemy_manager.spawn_random_enemies(6)
 
-    def draw(self) -> None:
+    def draw(self) -> bool:
         """
         Function to draw eneties in game resources class.
 
         The last drawn entites will appear on top of ones before it.
         """
-        self.enemy_manager.update()
-        self.enemy_manager.draw()
-        self.test_color_changer.draw()
         self.player.draw()
-        self.test_color_changer.draw()
-        sleep(0.1)
+        self.enemy_manager.update(self.player.x, self.player.y)
+        if self.enemy_manager.collisions_with_player(self.player.x, self.player.y):
+            return False
+        else:
+            self.enemy_manager.draw()
+            self.test_color_changer.draw()
+            sleep(0.1)
+            return True

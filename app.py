@@ -3,6 +3,7 @@ from time import sleep
 from rich.layout import Layout
 from rich.live import Live
 from rich.panel import Panel
+from rich.text import Text
 
 from src.resources.GameResources import GameResources
 
@@ -14,8 +15,11 @@ def run_game(layout: Layout, game_resources: GameResources) -> Panel:
     Layout: Layout  Holds all the rich renderables for the game. Updated with a new panel each tick.
     """
     game_resources.player.keyboard_input()
-    game_resources.draw()
-    panel = Panel(game_resources.level.to_string())
+    if not game_resources.draw():
+        with open('ascii.txt', 'r') as file:
+            panel = Panel(Text(''.join(file.readlines()), style="bold red", justify='full'))
+    else:
+        panel = Panel(game_resources.level.to_string())
     layout.update(panel)
     sleep(0.1)
 

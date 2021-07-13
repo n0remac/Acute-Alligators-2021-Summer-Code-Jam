@@ -21,10 +21,14 @@ class EnemyManager:
                 enemy = Enemy(level=self.level, x=x, y=y, symbol='^')
                 self.enemy_list.append(enemy)
 
-    def update(self) -> None:
+    def update(self, x: int, y: int) -> None:
         """Update each enemy in enemy list"""
         for enemy in self.enemy_list:
-            enemy.update()
+            enemy.update(x, y)
+
+    def collisions_with_player(self, x: int, y: int) -> bool:
+        """Checks if player collided with enemy"""
+        return any([(enemy.x, enemy.y) == (x, y) for enemy in self.enemy_list])
 
     def draw(self) -> None:
         """Draw each enemy in enemy list"""
