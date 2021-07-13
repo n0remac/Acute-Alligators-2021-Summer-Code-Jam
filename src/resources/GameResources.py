@@ -22,6 +22,7 @@ class GameResources:
 
         The last drawn entites will appear on top of ones before it.
         """
+        self.enemy_manager.update()
         self.enemy_manager.draw()
         self.test_color_changer.draw()
         self.player.draw()

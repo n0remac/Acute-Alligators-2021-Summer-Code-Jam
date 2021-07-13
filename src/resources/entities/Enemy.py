@@ -11,6 +11,7 @@ class Enemy(AbstractDungeonEntity):
 
     def update(self) -> None:
         """Update enemy"""
+        self.level.board[self.y][self.x] = self.ground_symbol
         self.mill()
 
     def mill(self) -> None:
@@ -33,6 +34,4 @@ class Enemy(AbstractDungeonEntity):
 
     def draw(self) -> None:
         """Places entity on map"""
-        self.level.board[self.y][self.x] = self.ground_symbol
-        self.update()
         self.level.board[self.y][self.x] = self.symbol

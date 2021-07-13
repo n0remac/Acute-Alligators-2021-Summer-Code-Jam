@@ -21,6 +21,11 @@ class EnemyManager:
                 enemy = Enemy(level=self.level, x=x, y=y, symbol='^')
                 self.enemy_list.append(enemy)
 
+    def update(self) -> None:
+        """Update each enemy in enemy list"""
+        for enemy in self.enemy_list:
+            enemy.update()
+
     def draw(self) -> None:
         """Draw each enemy in enemy list"""
         for enemy in self.enemy_list:
