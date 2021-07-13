@@ -1,7 +1,7 @@
 from .entities.character import Character
-from .entities.enemy import Enemy
 from .entities.ColorChanger import ColorChanger
-from .level import Level
+from .entities.Enemy import Enemy
+from .Level import Level
 
 
 class GameResources:
