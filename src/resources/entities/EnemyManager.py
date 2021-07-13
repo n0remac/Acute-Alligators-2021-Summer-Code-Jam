@@ -18,13 +18,8 @@ class EnemyManager:
             x = randint(2, self.level.width-2)
             if str(self.level.board[y][x]) == "'":
                 num -= 1
-                enemy = Enemy(level=self.level, x=x, y=y)
+                enemy = Enemy(level=self.level, x=x, y=y, symbol='^')
                 self.enemy_list.append(enemy)
-
-    def update(self) -> None:
-        """Update each enemy in enemy list"""
-        for enemy in self.enemy_list:
-            enemy.update()
 
     def draw(self) -> None:
         """Draw each enemy in enemy list"""

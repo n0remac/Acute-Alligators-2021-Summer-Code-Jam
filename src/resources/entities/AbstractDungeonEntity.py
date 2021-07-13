@@ -10,8 +10,8 @@ class AbstractDungeonEntity:
         self,
         level: Level,
         ground_symbol: str = "'",
-        x: int = 0,
         y: int = 0,
+        x: int = 0,
         symbol: str = "$",
         color: str = "white",
     ):
