@@ -1,6 +1,6 @@
 from .entities.character import Character
 from .entities.ColorChanger import ColorChanger
-from .entities.Enemy import Enemy
+from .entities.EnemyManager import EnemyManager
 from .Level import Level
 
 
@@ -11,8 +11,9 @@ class GameResources:
         self.level = Level(10, 10, [1, 2, 3, 4], [])
         self.player = Character(self.level, "$")
         self.player.start()
-        self.test_enemy = Enemy(self.level)
-        self.test_color_changer = ColorChanger(level=self.level, x=2, y=2, symbol="@", color="orange")
+        self.enemy_manager = EnemyManager(self.level)
+        self.enemy_manager.spawn_enemy()
+        self.test_color_changer = ColorChanger(level=self.level, x=2, y=2, symbol="@", color="yellow")
 
     def draw(self) -> None:
         """
@@ -20,6 +21,6 @@ class GameResources:
 
         The last drawn entites will appear on top of ones before it.
         """
-        self.test_enemy.draw()
+        self.enemy_manager.draw()
         self.test_color_changer.draw()
         self.player.draw()

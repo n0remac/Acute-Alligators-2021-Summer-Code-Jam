@@ -1,15 +1,17 @@
+from ..Level import Level
 from .Enemy import Enemy
 
 
 class EnemyManager:
     """Manager class to add, update, and draw enemy"""
 
-    def __init__(self):
+    def __init__(self, level: Level):
         self.enemy_list = []
+        self.level = level
 
     def spawn_enemy(self) -> None:
         """Spawns a new enemy"""
-        enemy = Enemy()
+        enemy = Enemy(level=self.level)
         self.enemy_list.append(enemy)
 
     def update(self) -> None:
