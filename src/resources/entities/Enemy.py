@@ -1,4 +1,4 @@
-from src.resources.level import Level
+from src.resources.Level import Level
 
 from .AbstractDungeonEntity import AbstractDungeonEntity
 
