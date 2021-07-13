@@ -1,6 +1,3 @@
-
-from typing import Union
-
 from pynput.keyboard import Key, Listener
 
 from src.resources.Level import Level
@@ -23,7 +20,7 @@ class Character(AbstractDungeonEntity):
         )
         self.playing = True
 
-    def press(self, key: Key) -> Union[None, bool]:
+    def press(self, key: Key) -> None:
         """Reads keyboard input"""
         try:
             self.level.board[self.y][self.x] = self.ground_symbol
@@ -39,9 +36,6 @@ class Character(AbstractDungeonEntity):
             if key.char == 's':
                 if self.y < self.level.height - 2:
                     self.y += 1
-            if key.char == 'p':
-                self.playing = False
-                return False
             self.ground_symbol = self.level.board[self.y][self.x]
         except AttributeError:
             self.playing = False
@@ -49,10 +43,10 @@ class Character(AbstractDungeonEntity):
     def release(self, key: Key) -> bool:
         """On key release"""
         try:
-            if key.char not in ('w', 'a', 's', 'd', 'p'):
+            if key.char == 'p':
                 self.playing = False
         except AttributeError:
-            self.playing = False
+            pass
         return False
 
     def keyboard_input(self) -> None:
@@ -62,5 +56,4 @@ class Character(AbstractDungeonEntity):
 
     def draw(self) -> None:
         """Places player on map"""
-        print((self.y, self.x))
         self.level.board[self.y][self.x] = self.symbol
