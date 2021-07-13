@@ -1,3 +1,5 @@
+from random import choice
+
 from .AbstractDungeonEntity import AbstractDungeonEntity
 
 
@@ -6,3 +8,31 @@ class Enemy(AbstractDungeonEntity):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+    def update(self) -> None:
+        """Update enemy"""
+        self.mill()
+
+    def mill(self) -> None:
+        """Enemy randomly moves around"""
+        movement_axis = choice(['x', 'y'])
+        direction_axis = [1, -1]
+        movement = choice(direction_axis)  # up or down (1, -1), left or right (1, -1)
+        if movement_axis == 'x':  # movement will be on the x axis
+            if (self.x <= 1 and movement == -1) or (self.x >= self.level.width - 2 and movement == 1):
+                direction_axis.remove(movement)
+                self.x += int(direction_axis[0])
+            else:
+                self.x += movement
+        if movement_axis == 'y':  # movement will be on the y axis
+            if (self.y <= 1 and movement == -1) or (self.y >= self.level.height - 2 and movement == 1):
+                direction_axis.remove(movement)
+                self.y += int(direction_axis[0])
+            else:
+                self.y += movement
+
+    def draw(self) -> None:
+        """Places entity on map"""
+        self.level.board[self.x][self.y] = self.ground_symbol
+        self.update()
+        self.level.board[self.x][self.y] = self.symbol

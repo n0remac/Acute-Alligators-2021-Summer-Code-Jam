@@ -18,7 +18,8 @@ class AbstractDungeonEntity:
         self.x = x
         self.y = y
         self.symbol = Text(symbol)
-        self.ground_symbol = ground_symbol
+        self.ground_symbol = Text(ground_symbol)
+        self.ground_symbol.stylize("bold magenta")
         self.level = level
         if color:
             self.symbol.stylize(color)
