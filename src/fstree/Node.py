@@ -1,15 +1,16 @@
 from __future__ import annotations
-
+from rich.tree import Tree
+from os import DirEntry
 
 class Node:
     """The Node class represents a folder in the folder structure or a room in the dungeon."""
 
     def __init__(self, parent: Node, path: str) -> None:
         """Initialize a Node instance with a parent reference and the path to the folder instance."""
-        self.parent = parent  # the folder or node which holds the current folder
-        self.path = path  # the path from the root dir (e.g. ./fstree/Node.py)
-        self.children = []  # a list of folders in the current folder
-        self.files = []  # a list of files in the current folder
+        self.parent = parent    # the folder or node which holds the current folder
+        self.path = path        # the path from the root dir (e.g. ./fstree/Node.py)
+        self.children: list[DirEntry] = []      # a list of folders in the current folder
+        self.files: list[DirEntry] = []       # a list of files in the current folder
 
     def display(self) -> None:
         """Prints the contents of the current folder. Similar to the ls command."""
@@ -18,3 +19,13 @@ class Node:
         )
         for child in self.children:
             child.display()
+
+    def walk_dir(self, tree):
+        """Adds the files the current directory and recursively add each folder."""
+        for file in self.files:
+            tree.add(file.name)
+        for child in self.children:
+            branch = tree.add(child.path.name)
+            if child.path.name.startswith("."):
+                continue
+            child.walk_dir(branch)

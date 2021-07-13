@@ -1,4 +1,6 @@
 from os import scandir
+from rich import print as rprint
+from rich.tree import Tree
 
 from src.fstree.Node import Node
 
@@ -27,3 +29,11 @@ class FileStructureTree:
     def display(self) -> None:
         """Prints the entire folder structure using recursive calls to the node.display() method."""
         self.root.display()
+
+    def tree(self):
+        """Creates the tree visualization of the folder structure."""
+        tree = Tree(self.root.path)
+        self.root.walk_dir(tree)
+        rprint(tree)
+
+    
