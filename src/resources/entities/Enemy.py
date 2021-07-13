@@ -12,8 +12,6 @@ class Enemy(AbstractDungeonEntity):
     def update(self) -> None:
         """Update enemy"""
         self.mill()
-        if self.player_in_radius():
-            pass
 
     def mill(self) -> None:
         """Enemy randomly moves around"""
