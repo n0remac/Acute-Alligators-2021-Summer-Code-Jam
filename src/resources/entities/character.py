@@ -1,4 +1,5 @@
 from threading import Thread
+from time import sleep
 
 from blessed import Terminal
 
@@ -31,6 +32,7 @@ class Character(AbstractDungeonEntity):
         """Reads keyboard input and moves the player"""
         on = True
         while on:
+            sleep(0.1)
             with term.cbreak():  # set keys to be read immediately
                 inp = term.inkey()  # wait and read one character
                 self.level.board[self.y][self.x] = self.ground_symbol

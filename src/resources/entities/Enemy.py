@@ -1,6 +1,7 @@
 from random import choice
 
 from .AbstractDungeonEntity import AbstractDungeonEntity
+from .character import Character
 
 
 class Enemy(AbstractDungeonEntity):
@@ -9,10 +10,11 @@ class Enemy(AbstractDungeonEntity):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def update(self) -> None:
+    def update(self, character: Character) -> None:
         """Update enemy"""
         self.mill()
-        self.player_in_radius()
+        if self.player_in_radius():
+            self.chase_player(character)
 
     def mill(self) -> None:
         """Enemy randomly moves around"""
@@ -32,7 +34,15 @@ class Enemy(AbstractDungeonEntity):
             else:
                 self.y += movement
 
-    def player_in_radius(self) -> None:
+    def chase_player(self, character: Character) -> None:
+        """Follows player once detected"""
+        distance_from_player = [(character.x - self.x) + 1, (character.y - self.y) + 1]
+        if self.x + distance_from_player[0] <= 1 or self.x + distance_from_player[0] >= self.level.width - 1:
+            self.x += distance_from_player[0]
+        if self.y + distance_from_player[1] <= 1 or self.y + distance_from_player[1] >= self.level.height - 1:
+            self.y += distance_from_player[1]
+
+    def player_in_radius(self) -> bool:
         """Checks if the player is in the 'aggro' radius of the enemy"""
         board = self.level.board
         spaces_next_to_enemy = [board[self.x + 1][self.y], board[self.x - 1][self.y],  # horizontal
@@ -41,11 +51,13 @@ class Enemy(AbstractDungeonEntity):
                                 board[self.x - 1][self.y + 1], board[self.x + 1][self.y + 1]]  # vertical diagonal
         if "$" in str(spaces_next_to_enemy):
             self.symbol.stylize("bold red")
+            return True
         else:
             self.symbol.stylize("bold white")
+            return False
 
-    def draw(self) -> None:
+    def draw(self, character: Character) -> None:
         """Places entity on map"""
         self.level.board[self.x][self.y] = self.ground_symbol
-        self.update()
+        self.update(character)
         self.level.board[self.x][self.y] = self.symbol
