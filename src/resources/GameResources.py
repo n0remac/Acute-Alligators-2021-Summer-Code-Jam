@@ -8,12 +8,12 @@ class GameResources:
     """holds objects that are used for during game runtime"""
 
     def __init__(self):
-        self.level = Level(10, 10, [1, 2, 3, 4], [])
+        self.level = Level(15, 10, [1, 2, 3, 4], [])
         self.player = Character(self.level, "$")
         self.player.start()
-        self.enemy_manager = EnemyManager(self.level)
-        self.enemy_manager.spawn_enemy()
         self.test_color_changer = ColorChanger(level=self.level, x=2, y=2, symbol="@", color="yellow")
+        self.enemy_manager = EnemyManager(self.level)
+        self.enemy_manager.spawn_random_enemies(6)
 
     def draw(self) -> None:
         """
