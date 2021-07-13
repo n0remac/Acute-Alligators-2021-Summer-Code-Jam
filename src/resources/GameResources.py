@@ -4,6 +4,7 @@ from time import sleep
 from .entities.character import Character
 from .entities.ColorChanger import ColorChanger
 from .entities.Enemy import Enemy
+from .entities.EnemyManager import EnemyManager
 from .Level import Level
 
 
@@ -11,12 +12,13 @@ class GameResources:
     """holds objects that are used for during game runtime"""
 
     def __init__(self):
-        self.level = Level(10, 10, [1, 2, 3, 4], [])
+        self.level = Level(15, 10, [1, 2, 3, 4], [])
         self.player = Character(self.level, "$")
-        self.player.start()
         self.test_enemy = Enemy(x=randint(2, self.level.width - 2), y=randint(2, self.level.height - 2),
                                 level=self.level, symbol="^")
         self.test_color_changer = ColorChanger(level=self.level, x=2, y=2, symbol="@", color="orange")
+        self.enemy_manager = EnemyManager(self.level)
+        self.enemy_manager.spawn_random_enemies(6)
 
     def draw(self) -> None:
         """
@@ -24,7 +26,8 @@ class GameResources:
 
         The last drawn entites will appear on top of ones before it.
         """
-        self.test_enemy.draw(self.player)
+        self.enemy_manager.draw()
+        self.test_color_changer.draw()
         self.player.draw()
         self.test_color_changer.draw()
         sleep(0.1)
