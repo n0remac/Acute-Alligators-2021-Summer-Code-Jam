@@ -1,6 +1,8 @@
 from __future__ import annotations
-from rich.tree import Tree
+
 from os import DirEntry
+
+from rich.tree import Tree
 
 
 class Node:
