@@ -2,7 +2,7 @@ from .AbstractDungeonEntity import AbstractDungeonEntity
 from .character import Character
 
 
-class AbstractColorChangingItem(AbstractDungeonEntity):
+class ColorChangingItem(AbstractDungeonEntity):
     """Dungeon Items that change players color if captured"""
 
     used_items = []

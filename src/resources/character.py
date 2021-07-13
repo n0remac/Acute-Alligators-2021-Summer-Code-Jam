@@ -53,3 +53,4 @@ class Character(AbstractDungeonEntity):
     def draw(self) -> None:
         """Places player on map"""
         self.current_level.board[self.y][self.x] = self.symbol
+        super()._set_position
