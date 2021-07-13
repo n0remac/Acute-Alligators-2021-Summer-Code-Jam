@@ -1,4 +1,5 @@
 from random import randint
+from time import sleep
 
 from .entities.character import Character
 from .entities.ColorChanger import ColorChanger
@@ -12,7 +13,7 @@ class GameResources:
     def __init__(self):
         self.level = Level(10, 10, [1, 2, 3, 4], [])
         self.player = Character(self.level, "$")
-        self.player.start()
+        #  self.player.start()
         self.test_enemy = Enemy(x=randint(2, self.level.width - 2), y=randint(2, self.level.height - 2),
                                 level=self.level, symbol="^")
         self.test_color_changer = ColorChanger(level=self.level, x=2, y=2, symbol="@", color="orange")
@@ -26,3 +27,4 @@ class GameResources:
         self.test_enemy.draw()
         self.test_color_changer.draw()
         self.player.draw()
+        sleep(0.1)

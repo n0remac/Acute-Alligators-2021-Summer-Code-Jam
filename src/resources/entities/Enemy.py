@@ -12,6 +12,7 @@ class Enemy(AbstractDungeonEntity):
     def update(self) -> None:
         """Update enemy"""
         self.mill()
+        self.player_in_radius()
 
     def mill(self) -> None:
         """Enemy randomly moves around"""
@@ -30,6 +31,18 @@ class Enemy(AbstractDungeonEntity):
                 self.y += int(direction_axis[0])
             else:
                 self.y += movement
+
+    def player_in_radius(self) -> None:
+        """Checks if the player is in the 'aggro' radius of the enemy"""
+        board = self.level.board
+        spaces_next_to_enemy = [board[self.x + 1][self.y], board[self.x - 1][self.y],  # horizontal
+                                board[self.x][self.y + 1], board[self.x][self.y - 1],  # vertical
+                                board[self.x + 1][self.y - 1], board[self.x - 1][self.y - 1],  # horizontal diagonal
+                                board[self.x - 1][self.y + 1], board[self.x + 1][self.y + 1]]  # vertical diagonal
+        if "$" in str(spaces_next_to_enemy):
+            self.symbol.stylize("bold red")
+        else:
+            self.symbol.stylize("bold white")
 
     def draw(self) -> None:
         """Places entity on map"""
