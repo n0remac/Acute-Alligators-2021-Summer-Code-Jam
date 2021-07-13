@@ -1,5 +1,6 @@
 from .entities.character import Character
 from .entities.ColorChanger import ColorChanger
+from .entities.Enemy import Enemy
 from .entities.EnemyManager import EnemyManager
 from .Level import Level
 
