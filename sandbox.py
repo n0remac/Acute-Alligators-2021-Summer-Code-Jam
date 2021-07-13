@@ -1,6 +1,6 @@
 from src.fstree.FileStructureTree import FileStructureTree
 
-tree = FileStructureTree('.')
+tree = FileStructureTree(".")
 tree.tree()
 
 # demo
@@ -18,4 +18,3 @@ tree.tree()
 #         currentNode = currentNode.parent
 #     else:
 #         currentNode = currentNode.children[next]
-
