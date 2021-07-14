@@ -4,10 +4,8 @@ from rich.layout import Layout
 class PanelLayout:
     """Define panel layout"""
 
-    def __init__(self) -> None:
-        pass
-
-    def make_layout() -> Layout:
+    @classmethod
+    def make_layout(self) -> Layout:
         """Makes the layout"""
         layout = Layout(name="root")
 
