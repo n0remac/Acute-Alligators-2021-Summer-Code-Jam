@@ -55,3 +55,5 @@ class Character(AbstractDungeonEntity):
     def draw(self) -> None:
         """Places player on map"""
         self.level.board[self.y][self.x] = self.symbol
+        if self.update_color:
+            self.symbol.stylize(self.update_color)

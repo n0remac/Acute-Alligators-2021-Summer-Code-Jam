@@ -29,7 +29,3 @@ class Enemy(AbstractDungeonEntity):
                 self.y += 1 if movement == -1 else -1
             else:
                 self.y += movement
-
-    def draw(self) -> None:
-        """Places entity on map"""
-        self.level.board[self.y][self.x] = self.symbol
