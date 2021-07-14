@@ -13,7 +13,7 @@ class GameResources:
         self.player = Character(symbol="$", x=self.level.width // 2, y=self.level.height // 2)
         self.test_color_changer = ColorChanger(x=2, y=2, symbol="@", color="orange")
         self.enemy_manager = EnemyManager(self.level)
-        self.enemy_manager.spawn_random_enemies(self.player.x, self.player.y, 3)
+        self.enemy_manager.spawn_random_enemies(self.player.x, self.player.y, 0)
 
     def update_entity(self, entity: AbstractDungeonEntity) -> None:
         """Updates the position of a single entity"""
@@ -40,6 +40,17 @@ class GameResources:
 
         self.enemy_manager.update(self.player.x, self.player.y)
 
+        # TODO use this instead of enmey manager draw
+        # for enemy in self.enemy_manager.enemy_list:
+        #     self.update_entity(enemy)
+        #     enemy.check collision -> pass this enemy and player position
+        #     if enemy.checktarger is not None
+        #          based on this mill or follow
+
+        # color changer
+        #   if collides with player -> compare color change pos and player position
+        #      change player color
+
     def draw(self) -> bool:
         """
         Function to draw entities in game resources class.
@@ -47,6 +58,7 @@ class GameResources:
         The last drawn entities will appear on top of ones before it.
         """
         self.draw_entity(self.player)
+
         if self.enemy_manager.collisions_with_player(self.player.x, self.player.y):
             self.player.playing = False
         else:

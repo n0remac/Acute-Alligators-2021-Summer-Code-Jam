@@ -38,6 +38,8 @@ def run_game(layout: Layout, game_resources: GameResources) -> Panel:
 def main() -> None:
     """Main function that sets up game and runs main game loop"""
     game_resources = GameResources()
+    game_resources.draw()
+
     game_panel = Panel(game_resources.level.to_string())
     layout = PanelLayout.make_layout()
     layout["main_game"].update(game_panel)
