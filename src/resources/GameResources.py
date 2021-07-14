@@ -24,7 +24,7 @@ class GameResources:
         self.enemy_manager.update(self.player.x, self.player.y)
         # Test code
         self.count += 1
-        if self.count == 4:
+        if self.count % 3 == 0:
             self.test_color_changer.change_color()
 
     def draw(self) -> bool:

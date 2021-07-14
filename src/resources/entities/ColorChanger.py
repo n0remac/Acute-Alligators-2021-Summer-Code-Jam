@@ -1,9 +1,13 @@
+import random
+
 from .AbstractDungeonEntity import AbstractDungeonEntity
 from .character import Character
 
 
 class ColorChanger(AbstractDungeonEntity):
     """Dungeon Items that change players color if captured"""
+
+    colors = ['red', 'yellow', 'green', 'blue']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -20,4 +24,4 @@ class ColorChanger(AbstractDungeonEntity):
 
     def change_color(self) -> None:
         """Call parent method to change instance colors"""
-        super()._change_color('red')
+        super()._change_color('bold ' + random.choice(self.colors))
