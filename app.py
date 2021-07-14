@@ -1,3 +1,4 @@
+from os import fspath
 from time import sleep
 
 from rich.layout import Layout
@@ -6,6 +7,7 @@ from rich.panel import Panel
 
 from src.resources.GameResources import GameResources
 from src.resources.PanelLayout import PanelLayout
+from src.fstree.FileStructureTree import FileStructureTree
 
 
 def run_game(layout: Layout, game_resources: GameResources) -> Panel:
@@ -27,14 +29,17 @@ def run_game(layout: Layout, game_resources: GameResources) -> Panel:
 
 def main() -> None:
     """Main function that sets up game and runs main game loop"""
+
     game_resources = GameResources()
     game_panel = Panel(game_resources.level.to_string())
     layout = PanelLayout.make_layout()
     layout["main_game"].update(game_panel)
 
+    fs_tree = FileStructureTree(".")
+
     # Panels to update
     layout["footer"].update(Panel('footer'))
-    layout["tree"].update(Panel('tree'))
+    layout["tree"].update(Panel(fs_tree.tree()))
 
     with Live(layout, refresh_per_second=10, screen=True):
         while game_resources.player.playing:

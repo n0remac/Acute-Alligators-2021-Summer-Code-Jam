@@ -35,4 +35,4 @@ class FileStructureTree:
         """Creates the tree visualization of the folder structure."""
         tree = Tree(self.root.path)
         self.root.walk_dir(tree)
-        rprint(tree)
+        return tree
