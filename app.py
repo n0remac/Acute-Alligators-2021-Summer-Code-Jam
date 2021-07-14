@@ -6,6 +6,7 @@ from rich.panel import Panel
 from rich.text import Text
 
 from src.resources.GameResources import GameResources
+from src.resources.PanelLayout import PanelLayout
 
 
 def run_game(layout: Layout, game_resources: GameResources) -> Panel:
@@ -18,17 +19,27 @@ def run_game(layout: Layout, game_resources: GameResources) -> Panel:
     if not game_resources.draw():
         with open('ascii.txt', 'r') as file:
             panel = Panel(Text(''.join(file.readlines()), style="bold red", justify='full'))
+            layout["main_game"].update(panel)
     else:
         panel = Panel(game_resources.level.to_string())
-    layout.update(panel)
-    sleep(0.1)
+        layout["main_game"].update(panel)
+
+        # Panels to update
+        layout["footer"].update(Panel('footer'))
+        layout["tree"].update(Panel('tree'))
+        sleep(0.1)
 
 
 def main() -> None:
     """Main function that sets up game and runs main game loop"""
     game_resources = GameResources()
     game_panel = Panel(game_resources.level.to_string())
-    layout = Layout(game_panel)
+    layout = PanelLayout.make_layout()
+    layout["main_game"].update(game_panel)
+
+    # Panels to update
+    layout["footer"].update(Panel('footer'))
+    layout["tree"].update(Panel('tree'))
 
     with Live(layout, refresh_per_second=10, screen=True):
         while game_resources.player.playing:

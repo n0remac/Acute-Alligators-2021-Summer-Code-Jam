@@ -42,7 +42,7 @@ class Enemy(AbstractDungeonEntity):
 
     def player_in_radius(self, x: int, y: int) -> bool:
         """Check if player is in 'aggro' radius"""
-        if (y - 2 <= self.y <= y + 2) or (x - 2 <= self.x <= x + 2):
+        if (y - 2 <= self.y <= y + 2) and (x - 2 <= self.x <= x + 2):
             self.symbol.stylize("bold red")
             return True
         else:
