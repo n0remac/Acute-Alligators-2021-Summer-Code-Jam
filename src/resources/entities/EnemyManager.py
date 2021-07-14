@@ -22,14 +22,17 @@ class EnemyManager:
             if str(self.level.board[y][x]) == "'" and \
                     x not in disallowed_spaces['x'] and y not in disallowed_spaces['y']:
                 num -= 1
-                enemy = Enemy(x=x, y=y, symbol='^')
-                enemy.level = self.level
+                enemy = Enemy(aggro_radius=2, x=x, y=y, symbol='^')
                 self.enemy_list.append(enemy)
 
-    def update(self, x: int, y: int) -> None:
-        """Update each enemy in enemy list"""
-        for enemy in self.enemy_list:
-            enemy.update(x, y)
+    # def update(self, x: int, y: int) -> None:
+    #     """Update each enemy in enemy list"""
+    #     for enemy in self.enemy_list:
+    #         print(enemy)
+    #         if enemy.is_in_radius(x, y):
+    #             enemy.follow()
+    #         else:
+    #             enemy.mill()
 
     def collisions_with_player(self, x: int, y: int) -> bool:
         """Checks if player collided with enemy"""
