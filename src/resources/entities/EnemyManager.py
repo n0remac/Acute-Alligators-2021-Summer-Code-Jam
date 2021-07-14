@@ -22,7 +22,7 @@ class EnemyManager:
             if str(self.level.board[y][x]) == "'" and \
                     x not in disallowed_spaces['x'] and y not in disallowed_spaces['y']:
                 num -= 1
-                enemy = Enemy(aggro_radius=2, x=x, y=y, symbol='^')
+                enemy = Enemy(aggro_radius=3, x=x, y=y, symbol='^')
                 self.enemy_list.append(enemy)
 
     # def update(self, x: int, y: int) -> None:

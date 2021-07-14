@@ -23,7 +23,6 @@ class Enemy(AbstractDungeonEntity):
 
     def follow(self) -> None:
         """Enemy movement function to chase player"""
-        print(self.target)
         x = self.target['x']
         y = self.target['y']
         move_x = 0
@@ -41,17 +40,16 @@ class Enemy(AbstractDungeonEntity):
             move_y = 1
 
         # move in that direction
-        self.new_positions["x"] += move_x
-        self.new_positions["y"] += move_y
+        self.new_positions["x"] = move_x
+        self.new_positions["y"] = move_y
 
     def is_in_radius(self, x: int, y: int) -> bool:
         """Check if player is in 'aggro' radius"""
         radius = self.aggro_radius
-        if (y - radius <= self.new_positions["y"] <= y + radius) and \
-                (x - radius <= self.new_positions["x"] <= x + radius):
+        if (y - radius <= self.y <= y + radius) and \
+                (x - radius <= self.x <= x + radius):
             self.symbol.stylize("bold red")
             self.target = {'x': x, 'y': y}
-            print(self.target)
             return True
         else:
             self.symbol.stylize("bold white")
