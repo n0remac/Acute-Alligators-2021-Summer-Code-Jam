@@ -42,6 +42,8 @@ class Enemy(AbstractDungeonEntity):
         # move in that direction
         self.new_positions["x"] = move_x
         self.new_positions["y"] = move_y
+        if self.new_positions["x"] != 0 and self.new_positions["y"] != 0:
+            self.new_positions[choice(("x", "y"))] = 0
 
     def is_in_radius(self, x: int, y: int) -> bool:
         """Check if player is in 'aggro' radius"""
