@@ -9,27 +9,29 @@ from src.resources.GameResources import GameResources
 from src.resources.PanelLayout import PanelLayout
 
 
+def end_screen(layout: Layout) -> None:
+    """Displays game over screen"""
+    with open('ascii.txt', 'r') as file:
+        panel = Panel(Text(''.join(file.readlines()), style="bold red", justify='full'))
+        layout["main_game"].update(panel)
+        sleep(3)
+
+
 def run_game(layout: Layout, game_resources: GameResources) -> Panel:
     """
     This function in in charge of running the game. It will call update and draw for each game object.
 
     Layout: Layout  Holds all the rich renderables for the game. Updated with a new panel each tick.
     """
-    game_resources.player.keyboard_input()
-    if not game_resources.draw():
-        with open('ascii.txt', 'r') as file:
-            panel = Panel(Text(''.join(file.readlines()), style="bold red", justify='full'))
-            layout["main_game"].update(panel)
-            sleep(3)
-            game_resources.player.playing = False
-    else:
-        panel = Panel(game_resources.level.to_string())
-        layout["main_game"].update(panel)
+    game_resources.update()
+    game_resources.draw()
+    panel = Panel(game_resources.level.to_string())
 
-        # Panels to update
-        layout["footer"].update(Panel('footer'))
-        layout["tree"].update(Panel('tree'))
-        sleep(0.1)
+    # Panels to update
+    layout["main_game"].update(panel)
+    layout["footer"].update(Panel('footer'))
+    layout["tree"].update(Panel('tree'))
+    sleep(0.1)
 
 
 def main() -> None:
@@ -46,6 +48,7 @@ def main() -> None:
     with Live(layout, refresh_per_second=10, screen=True):
         while game_resources.player.playing:
             run_game(layout, game_resources)
+        end_screen(layout)
 
 
 if __name__ == "__main__":
