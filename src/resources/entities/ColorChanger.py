@@ -5,8 +5,10 @@ from .character import Character
 class ColorChanger(AbstractDungeonEntity):
     """Dungeon Items that change players color if captured"""
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, color: str = "yellow", *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.color = color
+        self.symbol.stylize(self.color)
 
     def check_for_collision(self, player: Character) -> None:
         """Compares player's location to Dungeon Item"""

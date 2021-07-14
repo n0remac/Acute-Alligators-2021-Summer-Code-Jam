@@ -1,7 +1,7 @@
 from random import randint
 
-from ..ColorChanger import ColorChanger
 from ..Level import Level
+from .entities.ColorChanger import ColorChanger
 
 
 class ColorChangerManager:

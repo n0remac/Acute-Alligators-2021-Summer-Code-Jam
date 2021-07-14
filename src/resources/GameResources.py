@@ -1,7 +1,7 @@
 from time import sleep
 
+from .colorchangermanager import ColorChangerManager
 from .entities.character import Character
-from .entities.ColorChanger import ColorChanger
 from .entities.EnemyManager import EnemyManager
 from .Level import Level
 
@@ -12,9 +12,10 @@ class GameResources:
     def __init__(self):
         self.level = Level(20, 15, [1, 2, 3, 4], [])
         self.player = Character(self.level, "$")
-        self.test_color_changer = ColorChanger(level=self.level, x=2, y=2, symbol="@", color="orange")
+        self.color_manager = ColorChangerManager(level=self.level)
         self.enemy_manager = EnemyManager(self.level)
         self.enemy_manager.spawn_random_enemies(self.player.x, self.player.y, 6)
+        self.enemy_manager.spawn_color_changer_items(self.player.x, self.player.y, 2)
 
     def update(self) -> None:
         """Updates all game objects"""
@@ -32,6 +33,6 @@ class GameResources:
             self.player.playing = False
         else:
             self.enemy_manager.draw()
-            self.test_color_changer.draw()
+            self.color_manager.draw()
             sleep(0.1)
             return True
