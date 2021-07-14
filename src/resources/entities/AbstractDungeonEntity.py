@@ -6,6 +6,8 @@ from ..Level import Level
 class AbstractDungeonEntity:
     """Base class to set items color and location"""
 
+    _entities = []
+
     def __init__(
         self,
         level: Level,
@@ -23,8 +25,18 @@ class AbstractDungeonEntity:
         self.level = level
         if color:
             self.symbol.stylize(color)
+        self._entities.append(self)
+        self.update_color = None
         self.draw()
 
     def draw(self) -> None:
         """Places entity on map"""
         self.level.board[self.y][self.x] = self.symbol
+        if self.update_color:
+            self.symbol.stylize(self.update_color)
+
+    def _change_color(self, color: str) -> None:
+        """Initiates color change logic"""
+        for inst in self._entities:
+            inst.update_color = color
+            inst.draw()

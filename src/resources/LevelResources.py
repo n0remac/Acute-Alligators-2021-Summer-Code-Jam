@@ -6,7 +6,3 @@ class LevelResources(Text):
 
     def __init__(self, symbol: str = '', style: str = ''):
         super().__init__(text=symbol, style=style)
-
-    def __str__(self):
-        """Returns display as a Text object"""
-        return str(self.text)

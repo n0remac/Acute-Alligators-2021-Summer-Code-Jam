@@ -60,6 +60,3 @@ class Enemy(AbstractDungeonEntity):
             self.symbol.stylize("bold white")
             return False
 
-    def draw(self) -> None:
-        """Places entity on map"""
-        self.level.board[self.y][self.x] = self.symbol

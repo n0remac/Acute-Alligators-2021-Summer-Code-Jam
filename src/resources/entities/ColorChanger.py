@@ -17,3 +17,7 @@ class ColorChanger(AbstractDungeonEntity):
         self.used_items.append(self.symbol)
         self.symbol = "'"
         self.symbol.stylize = "magenta"
+
+    def change_color(self) -> None:
+        """Call parent method to change instance colors"""
+        super()._change_color('red')
