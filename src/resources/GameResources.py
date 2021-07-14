@@ -23,9 +23,9 @@ class GameResources:
 
     def draw(self) -> bool:
         """
-        Function to draw eneties in game resources class.
+        Function to draw entities in game resources class.
 
-        The last drawn entites will appear on top of ones before it.
+        The last drawn entities will appear on top of ones before it.
         """
         self.player.draw()
         if self.enemy_manager.collisions_with_player(self.player.x, self.player.y):
