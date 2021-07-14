@@ -1,7 +1,10 @@
 from random import randint
+from typing import Optional
 
-from ..Level import Level
+from .entities.character import Character
 from .entities.ColorChanger import ColorChanger
+from .entities.EnemyManager import EnemyManager
+from .Level import Level
 
 
 class ColorChangerManager:
@@ -22,16 +25,25 @@ class ColorChangerManager:
                     x not in disallowed_spaces['x'] and y not in disallowed_spaces['y']:
                 num -= 1
                 enemy = ColorChanger(level=self.level, x=x, y=y, symbol='@', color='yellow')
-                self.color_changer_list_list.append(enemy)
+                self.color_changer_list.append(enemy)
 
-    def reset_all(self, x: int, y: int) -> None:
+    def update(self, enemy_manager: EnemyManager, player: Character) -> None:
+        """Updates color changer items"""
+        player_collided, color_changer_used = self.collisions_with_player(player.x, player.y)
+        if player_collided:
+            self.reset(player.x, player.y)
+
+    def reset(self, x: int, y: int) -> None:
         """Update each enemy in enemy list"""
         for color_changer in self.color_changer_list:
-            color_changer.reset(x, y)
+            if color_changer.x == x and color_changer.y == y:
+                color_changer.reset()
 
-    def collisions_with_player(self, x: int, y: int) -> bool:
+    def collisions_with_player(self, x: int, y: int) -> tuple[bool, Optional[tuple[int, int]]]:
         """Checks if player collided with enemy"""
-        return any([(color_changer.x, color_changer.y) == (x, y) for color_changer in self.color_changer_list])
+        x_y_coords = [(color_changer.x, color_changer.y) for color_changer in self.color_changer_list]
+        return any((equality := [i == (x, y) for i in x_y_coords])), \
+            x_y_coords[equality.index(True)] if True in equality else None
 
     def draw(self) -> None:
         """Draw each enemy in enemy list"""

@@ -14,13 +14,14 @@ class GameResources:
         self.player = Character(self.level, "$")
         self.color_manager = ColorChangerManager(level=self.level)
         self.enemy_manager = EnemyManager(self.level)
-        self.enemy_manager.spawn_random_enemies(self.player.x, self.player.y, 6)
-        self.enemy_manager.spawn_color_changer_items(self.player.x, self.player.y, 2)
+        # self.enemy_manager.spawn_random_enemies(self.player.x, self.player.y, 6)
+        self.color_manager.spawn_color_changer_items(self.player.x, self.player.y, 2)
 
     def update(self) -> None:
         """Updates all game objects"""
         self.player.keyboard_input()
         self.enemy_manager.update(self.player.x, self.player.y)
+        self.color_manager.update(self.enemy_manager, self.player)
 
     def draw(self) -> bool:
         """
