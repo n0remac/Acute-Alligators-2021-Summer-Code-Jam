@@ -17,7 +17,7 @@ def run_game(layout: Layout, game_resources: GameResources) -> Panel:
     game_resources.player.keyboard_input()
     game_resources.draw()
     panel = Panel(game_resources.level.to_string())
-    layout["main game"].update(panel)
+    layout["main_game"].update(panel)
 
     # Panels to update
     layout["footer"].update(Panel('footer'))
@@ -30,7 +30,7 @@ def main() -> None:
     game_resources = GameResources()
     game_panel = Panel(game_resources.level.to_string())
     layout = PanelLayout.make_layout()
-    layout["main game"].update(game_panel)
+    layout["main_game"].update(game_panel)
 
     # Panels to update
     layout["footer"].update(Panel('footer'))

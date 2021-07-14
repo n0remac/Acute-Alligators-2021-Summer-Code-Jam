@@ -15,7 +15,7 @@ class PanelLayout:
         )
 
         layout['main'].split_column(
-            Layout(name='main game', ratio=7),
+            Layout(name='main_game', ratio=7),
             Layout(name='footer', ratio=2)
         )
 
