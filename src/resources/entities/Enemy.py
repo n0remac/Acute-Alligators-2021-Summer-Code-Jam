@@ -8,6 +8,7 @@ class Enemy(AbstractDungeonEntity):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.level = None
 
     def update(self, x: int, y: int) -> None:
         """Update enemy. Chooses mill or follow based on passed position."""

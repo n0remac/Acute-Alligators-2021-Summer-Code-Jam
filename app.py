@@ -25,6 +25,7 @@ def run_game(layout: Layout, game_resources: GameResources) -> Panel:
     """
     game_resources.update()
     game_resources.draw()
+
     panel = Panel(game_resources.level.to_string())
 
     # Panels to update
@@ -45,7 +46,7 @@ def main() -> None:
     layout["footer"].update(Panel('footer'))
     layout["tree"].update(Panel('tree'))
 
-    with Live(layout, refresh_per_second=10, screen=True):
+    with Live(layout, refresh_per_second=10, screen=False):
         while game_resources.player.playing:
             run_game(layout, game_resources)
         end_screen(layout)
