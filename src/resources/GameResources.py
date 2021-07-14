@@ -22,6 +22,10 @@ class GameResources:
         """Updates all game objects"""
         self.player.keyboard_input()
         self.enemy_manager.update(self.player.x, self.player.y)
+        # Test code
+        self.count += 1
+        if self.count == 4:
+            self.test_color_changer.change_color()
 
     def draw(self) -> bool:
         """
@@ -30,7 +34,6 @@ class GameResources:
         The last drawn entities will appear on top of ones before it.
         """
         self.player.draw()
-<<<<<<< HEAD
         if self.enemy_manager.collisions_with_player(self.player.x, self.player.y):
             self.player.playing = False
         else:
@@ -38,11 +41,3 @@ class GameResources:
             self.test_color_changer.draw()
             sleep(0.1)
             return True
-=======
-        self.test_color_changer.draw()
-        self.count += 1  # Test
-        if self.count == 4:  # Test
-            self.test_color_changer.change_color()  # test
-
-        sleep(0.1)
->>>>>>> WIP: Initiate color change to player objects. Removed __str__ method from LevelResources. Remove draw() from Enemy class to make code more DRY. Added new instance arttr to apply color update
