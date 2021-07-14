@@ -20,6 +20,8 @@ def run_game(layout: Layout, game_resources: GameResources) -> Panel:
         with open('ascii.txt', 'r') as file:
             panel = Panel(Text(''.join(file.readlines()), style="bold red", justify='full'))
             layout["main_game"].update(panel)
+            sleep(3)
+            game_resources.player.playing = False
     else:
         panel = Panel(game_resources.level.to_string())
         layout["main_game"].update(panel)
