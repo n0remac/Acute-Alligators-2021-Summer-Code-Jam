@@ -59,4 +59,3 @@ class Enemy(AbstractDungeonEntity):
         else:
             self.symbol.stylize("bold white")
             return False
-
