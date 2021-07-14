@@ -29,15 +29,15 @@ class Enemy(AbstractDungeonEntity):
         move_y = 0
 
         # find direction
-        if self.new_positions["x"] > x:
-            move_x = -1
-        if self.new_positions["x"] < x:
+        if self.x < x:
             move_x = 1
+        if self.x > x:
+            move_x = -1
 
-        if self.new_positions["y"] > y:
-            move_y = -1
-        if self.new_positions["y"] < y:
+        if self.y < y:
             move_y = 1
+        if self.y > y:
+            move_y = -1
 
         # move in that direction
         self.new_positions["x"] = move_x

@@ -18,21 +18,11 @@ class EnemyManager:
             y = randint(2, self.level.height-2)
             x = randint(2, self.level.width-2)
             disallowed_spaces = {'x': (x_player - 1, x_player + 1), 'y': (y_player - 1, y_player + 1)}
-            print(str(self.level.board[y][x]))
             if str(self.level.board[y][x]) == "'" and \
                     x not in disallowed_spaces['x'] and y not in disallowed_spaces['y']:
                 num -= 1
                 enemy = Enemy(aggro_radius=3, x=x, y=y, symbol='^')
                 self.enemy_list.append(enemy)
-
-    # def update(self, x: int, y: int) -> None:
-    #     """Update each enemy in enemy list"""
-    #     for enemy in self.enemy_list:
-    #         print(enemy)
-    #         if enemy.is_in_radius(x, y):
-    #             enemy.follow()
-    #         else:
-    #             enemy.mill()
 
     def collisions_with_player(self, x: int, y: int) -> bool:
         """Checks if player collided with enemy"""
