@@ -11,7 +11,7 @@ class GameResources:
     def __init__(self, testing: bool):
         self.level = Level(20, 15, [1, 2, 3, 4], [])
         self.player = Character(symbol="$", x=self.level.width // 2, y=self.level.height // 2)
-        self.test_color_changer = ColorChanger(x=2, y=2, symbol="@", color="bold green")
+        self.test_color_changer = ColorChanger(x=2, y=2, symbol="@")
         self.enemy_manager = EnemyManager(self.level)
         self.enemy_manager.spawn_random_enemies(self.player.x, self.player.y, 6)
         self.testing = testing
