@@ -29,9 +29,6 @@ class AbstractDungeonEntity:
 
     def __gt__(self, obj: type) -> bool:
         """Return True if current object is greater than"""
-        # print('check gt')
-        # print('self: {} other: {}'.format(self.color, obj.color))
-
         if self.color == "bold red" and obj.color == "bold green":
             state = True
         elif self.color == "bold green" and obj.color == "bold blue":
@@ -44,8 +41,6 @@ class AbstractDungeonEntity:
 
     def __lt__(self, obj: type) -> bool:
         """Returns True if current object is less than"""
-        # print('check lt')
-        # print('self: {} other: {}'.format(self.color, obj.color))
         if self.color == "bold green" and obj.color == "bold red":
             state = True
         elif self.color == "bold blue" and obj.color == "bold green":
@@ -58,12 +53,8 @@ class AbstractDungeonEntity:
 
     def __eq__(self, obj: type) -> bool:
         """Compares AbstractEntityObjects for equality"""
-        # print('check eq')
-        # print('self: {} other: {}'.format(self.color, obj.color))
         return self.color == obj.color
 
     def __ne__(self, obj: type) -> bool:
         """Compare AbstractEntityObjects for inequaulity"""
-        # print('check ne')
-        # print('self: {} other: {}'.format(self.color, obj.color))
         return self.color != obj.color
