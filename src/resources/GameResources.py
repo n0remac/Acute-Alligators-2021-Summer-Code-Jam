@@ -11,6 +11,8 @@ class GameResources:
     def __init__(self, testing: bool):
         self.level = Level(20, 15, [1, 2, 3, 4], [])
         self.player = Character(symbol="$", x=self.level.width // 2, y=self.level.height // 2)
+
+        self.player.start()
         self.test_color_changer = ColorChanger(x=2, y=2, symbol="@")
         self.enemy_manager = EnemyManager(self.level)
         self.enemy_manager.spawn_random_enemies(self.player.x, self.player.y, 6)
@@ -36,7 +38,8 @@ class GameResources:
 
     def update(self) -> None:
         """Updates all game objects"""
-        self.player.keyboard_input()
+        # self.player.keyboard_input()
+        self.player.update()
         self.update_entity(self.player)
 
         # self.enemy_manager.update(self.player.x, self.player.y)
