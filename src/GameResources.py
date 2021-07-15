@@ -23,7 +23,7 @@ class GameResources:
         self.test_color_changer = ColorChanger(x=2, y=2, symbol="@")
         self.enemy_manager = EnemyManager(self.level)
 
-        self.enemy_manager.spawn_random_enemies(self.player.x, self.player.y, 0)
+        self.enemy_manager.spawn_random_enemies(self.player.x, self.player.y, self.level_selector.cur.files)
         self.testing = testing
 
     def update_entity(self, entity: AbstractDungeonEntity) -> None:
