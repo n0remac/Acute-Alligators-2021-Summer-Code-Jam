@@ -8,6 +8,24 @@ from rich.text import Text
 
 from src.resources.GameResources import GameResources
 from src.resources.PanelLayout import PanelLayout
+from src.resources.startscreen import StartScreen
+
+
+def start_screen() -> None:
+    """Start screen"""
+    screen = StartScreen()
+    layout_screen = screen.layout
+    with Live(layout_screen, refresh_per_second=10, screen=True):
+        while screen.in_start:
+            screen.keyboard_input()
+            if screen.guide is True:
+                with open("guide.txt", "r") as file:
+                    guide_panel = Panel(Text(''.join(file.readlines()), style="bold green", justify="full"))
+                layout_screen["start"].update(guide_panel)
+            else:
+                with open("start_screen_display.txt", "r") as file:
+                    screen_panel = Panel(Text(''.join(file.readlines()), style="bold white", justify="full"))
+                layout_screen["start"].update(screen_panel)
 
 
 def end_screen(layout: Layout) -> None:
@@ -42,12 +60,14 @@ def main() -> None:
     game_resources.draw()
 
     game_panel = Panel(game_resources.level.to_string())
-    layout = PanelLayout.make_layout()
+    layout = PanelLayout.make_layout(start=False)
     layout["main_game"].update(game_panel)
 
     # Panels to update
     layout["footer"].update(Panel('footer'))
     layout["tree"].update(Panel('tree'))
+
+    start_screen()
 
     with Live(layout, refresh_per_second=10, screen=True):
         while game_resources.player.playing:
