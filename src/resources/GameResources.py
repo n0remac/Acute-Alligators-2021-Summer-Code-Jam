@@ -1,9 +1,9 @@
+from ..LevelSelector import LevelSelector
 from .entities.AbstractDungeonEntity import AbstractDungeonEntity
 from .entities.character import Character
 from .entities.ColorChanger import ColorChanger
 from .entities.EnemyManager import EnemyManager
 from .entities.level.Level import Level
-from ..LevelSelector import LevelSelector
 
 
 class GameResources:

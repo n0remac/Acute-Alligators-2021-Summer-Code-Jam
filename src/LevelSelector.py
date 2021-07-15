@@ -1,6 +1,7 @@
 from .fstree.FileStructureTree import FileStructureTree
 from .resources.entities.level.Level import Level
 
+
 class LevelSelector:
     """Creates and stores levels"""
 
