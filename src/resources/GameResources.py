@@ -16,12 +16,13 @@ class GameResources:
         self.level_selector = LevelSelector()
 
         self.level = self.level_selector.create_level()
-        self.player = Character(symbol="$", x=self.level.width // 2, y=self.level.height // 2)
+        self.player = Character(symbol="$", x=self.level.width // 2, y=self.level.height // 2,
+                                color=self._choose_random_color('character'))
 
         if bless:
             self.player.start()
 
-        self.test_color_changer = ColorChanger(x=2, y=2, symbol="@")
+        self.test_color_changer = ColorChanger(x=2, y=2, symbol="@", color=self._choose_random_color())
         self.enemy_manager = EnemyManager(self.level)
 
         self.enemy_manager.spawn_random_enemies(self.player.x, self.player.y, 2)
