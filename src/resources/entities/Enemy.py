@@ -30,21 +30,30 @@ class Enemy(AbstractDungeonEntity):
         move_y = 0
 
         # find direction
-        if self.x < x:
-            move_x = 1
-        if self.x > x:
-            move_x = -1
-
-        if self.y < y:
-            move_y = 1
-        if self.y > y:
-            move_y = -1
+        if abs(x - self.x) > abs(y - self.y):
+            if self.x < x:
+                move_x = 1
+            if self.x > x:
+                move_x = -1
+        elif abs(x - self.x) < abs(y - self.y):
+            if self.y < y:
+                move_y = 1
+            if self.y > y:
+                move_y = -1
+        else:
+            # like a pawn, this can strike diagonally if the x and y abs values are the same
+            if self.x < x:
+                move_x = 1
+            if self.x > x:
+                move_x = -1
+            if self.y < y:
+                move_y = 1
+            if self.y > y:
+                move_y = -1
 
         # move in that direction
         self.new_positions["x"] = move_x
         self.new_positions["y"] = move_y
-        if self.new_positions["x"] != 0 and self.new_positions["y"] != 0:
-            self.new_positions[choice(("x", "y"))] = 0
 
     def is_in_radius(self, x: int, y: int) -> bool:
         """Check if player is in 'aggro' radius"""
