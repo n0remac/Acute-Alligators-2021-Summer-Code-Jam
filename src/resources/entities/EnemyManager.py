@@ -17,7 +17,15 @@ class EnemyManager:
 
     def spawn_random_enemies(self, x_player: int, y_player: int, num: int) -> None:
         """Spawns a new enemies randomly"""
+        selected = []
+        color = ''
+        found_color = False
         while num > 0:
+            while not found_color:
+                color = choice(COLOR_CHOICES)
+                if color not in selected:
+                    found_color = True
+                    selected.append(color)
             y = randint(2, self.level.height-2)
             x = randint(2, self.level.width-2)
             disallowed_spaces = {'x': (x_player - 1, x_player + 1), 'y': (y_player - 1, y_player + 1)}
