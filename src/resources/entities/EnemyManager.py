@@ -10,6 +10,7 @@ class EnemyManager:
 
     def __init__(self, level: Level):
         self.enemy_list = []
+        self.enemy_in_radius = []
         self.level = level
 
     def spawn_random_enemies(self, x_player: int, y_player: int, files_in_dir: list) -> None:
@@ -24,6 +25,14 @@ class EnemyManager:
                 num -= 1
                 enemy = Enemy(aggro_radius=3, x=x, y=y, symbol='^', file=files_in_dir[num])
                 self.enemy_list.append(enemy)
+
+    def enemies_detected(self) -> None:
+        """Gets all enemies in radius of a player"""
+        for enemy in self.enemy_list:
+            if enemy.player_detected and enemy not in self.enemy_in_radius:
+                self.enemy_in_radius.append(enemy)
+            elif not enemy.player_detected and enemy in self.enemy_in_radius:
+                self.enemy_in_radius.remove(enemy)
 
     def collisions_with_player(self, x: int, y: int) -> bool:
         """Checks if player collided with enemy"""
