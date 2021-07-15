@@ -58,6 +58,8 @@ class Character(AbstractDungeonEntity):
             self.new_positions["y"] = -1
         if direction == 's':
             self.new_positions["y"] = 1
+        if direction == 'p':
+            self.playing = False
 
     def start(self) -> None:
         """Start thread"""
@@ -65,8 +67,7 @@ class Character(AbstractDungeonEntity):
 
     def control(self) -> None:
         """Get keyboard controls"""
-        on = True
-        while on:
+        while self.playing:
             with term.cbreak():  # set keys to be read immediately
                 inp = term.inkey()  # wait and read one character
                 self.commands.append(inp)
