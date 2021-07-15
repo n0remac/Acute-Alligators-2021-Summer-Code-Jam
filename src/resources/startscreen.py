@@ -1,4 +1,6 @@
 from pynput.keyboard import Key, Listener
+from rich.panel import Panel
+from rich.text import Text
 
 from .PanelLayout import PanelLayout
 
@@ -14,7 +16,6 @@ class StartScreen:
     def press(self, key: Key) -> None:
         """Reads keyboard input"""
         try:
-            print(key.char)
             if key.char == 'h':
                 self.guide = True
             if key.char == 'b' and self.guide is True:
@@ -32,3 +33,17 @@ class StartScreen:
         """Uses listener that reads keyboard input from press"""
         with Listener(on_press=self.press, on_release=self.release) as listener:  # set keys to be read immediately
             listener.join()
+
+    def display_screen(self) -> Panel:
+        """Display default start screen"""
+        with open("start_screen_display.txt", "r") as file:
+            screen_panel = Panel(Text(''.join(file.readlines()), style="bold white", justify="full"))
+
+        return screen_panel
+
+    def display_guide(self) -> Panel:
+        """Display 'how to play' screen; displays guide screen"""
+        with open("guide.txt", "r") as file:
+            guide_panel = Panel(Text(''.join(file.readlines()), style="bold green", justify="full"))
+
+        return guide_panel

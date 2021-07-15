@@ -19,13 +19,13 @@ def start_screen() -> None:
         while screen.in_start:
             screen.keyboard_input()
             if screen.guide is True:
-                with open("guide.txt", "r") as file:
-                    guide_panel = Panel(Text(''.join(file.readlines()), style="bold green", justify="full"))
-                layout_screen["start"].update(guide_panel)
+                layout_screen["start"].split_row(
+                    screen.display_guide()
+                )
             else:
-                with open("start_screen_display.txt", "r") as file:
-                    screen_panel = Panel(Text(''.join(file.readlines()), style="bold white", justify="full"))
-                layout_screen["start"].update(screen_panel)
+                layout_screen["start"].split_row(
+                    screen.display_screen()
+                )
 
 
 def end_screen(layout: Layout) -> None:
