@@ -1,4 +1,3 @@
-from ..fstree.FileStructureTree import FileStructureTree
 from .entities.AbstractDungeonEntity import AbstractDungeonEntity
 from .entities.character import Character
 from .entities.ColorChanger import ColorChanger
