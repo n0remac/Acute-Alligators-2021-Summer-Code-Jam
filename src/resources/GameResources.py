@@ -23,7 +23,7 @@ class GameResources:
         x = entity.new_positions["x"]
         y = entity.new_positions["y"]
         try:
-            if str(self.level.board[entity.y + y][entity.x + x]) in ("'", "@", "$"):
+            if str(self.level.board[entity.y + y][entity.x + x]) in ("'", "$", "@", "#"):
                 self.level.board[entity.y][entity.x] = entity.ground_symbol
                 entity.x += x
                 entity.y += y
@@ -61,13 +61,16 @@ class GameResources:
 
         The last drawn entities will appear on top of ones before it.
         """
-        self.draw_entity(self.player)
 
         if self.enemy_manager.collisions_with_player(self.player.x, self.player.y):
             self.player.playing = False
-            return False
         else:
             for enemy in self.enemy_manager.enemy_list:
                 self.draw_entity(enemy)
             self.draw_entity(self.test_color_changer)
-            return True
+
+        self.draw_entity(self.player)
+
+    def overlaps(self, first_entity: AbstractDungeonEntity, second_entity: AbstractDungeonEntity) -> bool:
+        """Checks if two entities overlap"""
+        return first_entity.x == second_entity.x and first_entity.x == y
