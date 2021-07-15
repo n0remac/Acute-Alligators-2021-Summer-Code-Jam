@@ -1,6 +1,6 @@
 import random
 
-from src.resources.constants import COLOR_CHOICES
+from src.resources.constants import COLOR_CHANGER_CHOICES, PLAYER_COLOR_CHOICES
 
 from .entities.AbstractDungeonEntity import AbstractDungeonEntity
 from .entities.character import Character
@@ -14,7 +14,7 @@ class GameResources:
     def __init__(self, testing: bool):
         self.level = Level(20, 15, [1, 2, 3, 4], [])
         self.player = Character(symbol="$", x=self.level.width // 2,
-                                y=self.level.height // 2, color=self._choose_random_color())
+                                y=self.level.height // 2, color=self._choose_random_color('character'))
         self.test_color_changer = ColorChanger(x=2, y=2, symbol="@", color=self._choose_random_color())
         self.enemy_manager = EnemyManager(self.level)
 
@@ -55,8 +55,10 @@ class GameResources:
             self.player.y = self.level.entrance[0]
 
         for enemy in self.enemy_manager.enemy_list:
-            if enemy.is_in_radius(self.player.x, self.player.y):
+            if (enemy > self.player) or (enemy.is_in_radius(self.player.x, self.player.y) and enemy != self.player):
                 enemy.follow(self.testing)
+            elif self.player > enemy:
+                enemy.run(self.player.x, self.player.y)
             else:
                 enemy.mill()
 
@@ -71,9 +73,16 @@ class GameResources:
 
         The last drawn entities will appear on top of ones before it.
         """
-        if self.enemy_manager.collisions_with_player(self.player.x, self.player.y):
+        self.draw_entity(self.player)
+
+        result = self.enemy_manager.collisions_with_player(self.player)
+        if result == 'player':
+            # Remove Enemey
             self.player.playing = False
         else:
+            # if len(result) > 0:
+            #     for enemy in result:
+            #         self.enemy_manager.enemy_list.pop(self.enemy_manager.enemy_list.index(enemy))
             for enemy in self.enemy_manager.enemy_list:
                 self.draw_entity(enemy)
             self.draw_entity(self.test_color_changer)
@@ -84,5 +93,10 @@ class GameResources:
         """Checks if two entities overlap"""
         return first_entity.x == second_entity.x and first_entity.x == second_entity.y
 
-    def _choose_random_color(self) -> None:
-        return random.choice(COLOR_CHOICES)
+    def _choose_random_color(self, entity: str = None) -> None:
+        """Selects random color"""
+        if entity == 'character':
+            color = random.choice(PLAYER_COLOR_CHOICES)
+        else:
+            color = random.choice(COLOR_CHANGER_CHOICES)
+        return color
