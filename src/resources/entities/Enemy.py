@@ -22,26 +22,15 @@ class Enemy(AbstractDungeonEntity):
         if movement_axis == 'y':  # movement will be on the y axis
             self.new_positions["y"] += movement
 
-    def follow(self) -> None:
+    def follow(self, testing: bool = False) -> None:
         """Enemy movement function to chase player"""
-        x = self.target['x']
-        y = self.target['y']
-        move_x = 0
-        move_y = 0
+        if not testing:
+            x = self.target['x']
+            y = self.target['y']
+            move_x = 0
+            move_y = 0
 
-        # find direction
-        if abs(x - self.x) > abs(y - self.y):
-            if self.x < x:
-                move_x = 1
-            if self.x > x:
-                move_x = -1
-        elif abs(x - self.x) < abs(y - self.y):
-            if self.y < y:
-                move_y = 1
-            if self.y > y:
-                move_y = -1
-        else:
-            # like a pawn, this can strike diagonally if the x and y abs values are the same
+            # find direction
             if self.x < x:
                 move_x = 1
             if self.x > x:

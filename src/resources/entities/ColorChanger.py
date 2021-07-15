@@ -8,12 +8,15 @@ class ColorChanger(AbstractDungeonEntity):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def check_for_collision(self, player: Character) -> None:
-        """Compares player's location to Dungeon Item"""
-        pass
+    def collisions_with_player(self, x: int, y: int) -> bool:
+        """Checks if player collided with enemy"""
+        return ((self.x, self.y) == (x, y-1)) or ((self.x, self.y) == (x-1, y))
 
-    def reset(self) -> None:
+    def _reset(self) -> None:
         """Resets symbol to normal game 'tick'"""
-        self.used_items.append(self.symbol)
-        self.symbol = "'"
-        self.symbol.stylize = "magenta"
+        self.symbol = self.ground_symbol
+
+    def change_color(self, player: Character) -> None:
+        """Will change color of player instance and reset to normal game tile"""
+        player.symbol.stylize(self.style)
+        self._reset()
