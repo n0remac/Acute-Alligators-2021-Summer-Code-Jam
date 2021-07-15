@@ -15,6 +15,10 @@ def start_screen() -> None:
     """Start screen"""
     screen = StartScreen()
     layout_screen = screen.layout
+    layout_screen["start"].split_row(
+        screen.display_screen()
+    )
+
     with Live(layout_screen, refresh_per_second=10, screen=True):
         while screen.in_start:
             screen.keyboard_input()
