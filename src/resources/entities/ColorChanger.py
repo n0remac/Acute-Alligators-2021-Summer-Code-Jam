@@ -1,5 +1,3 @@
-import random
-
 from .AbstractDungeonEntity import AbstractDungeonEntity
 from .character import Character
 
@@ -7,11 +5,9 @@ from .character import Character
 class ColorChanger(AbstractDungeonEntity):
     """Dungeon Items that change players color if captured"""
 
-    _choices = ['blue', 'red', 'yellow']
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.color = "bold " + random.choice(self._choices)
+        self.color = kwargs.get('color', '')
         self.symbol.stylize(self.color)
 
     def collisions_with_player(self, x: int, y: int) -> bool:
