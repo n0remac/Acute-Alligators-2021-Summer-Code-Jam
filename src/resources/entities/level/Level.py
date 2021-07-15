@@ -10,7 +10,7 @@ from .Wall import Wall
 class Level:
     """Generates and contains a level"""
 
-    def __init__(self, width: int, height: int, children: list, files: list) -> None:
+    def __init__(self, width: int, height: int, children: list) -> None:
         self.board = []
         self.width = width
         self.height = height
