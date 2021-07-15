@@ -28,7 +28,7 @@ class Level:
                 row.append(tile)
             self.board.append(row)
 
-    def add_doors(self, doors: int, first_door) -> None:
+    def add_doors(self, doors: int, first_door: (int, int)) -> None:
         """Add doors to level"""
         if first_door != (0, 0):
             self.first_door = first_door
