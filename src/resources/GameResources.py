@@ -3,23 +3,24 @@ from .entities.AbstractDungeonEntity import AbstractDungeonEntity
 from .entities.character import Character
 from .entities.ColorChanger import ColorChanger
 from .entities.EnemyManager import EnemyManager
-from .entities.level.Level import Level
 
 
 class GameResources:
     """Holds objects that are used for during game runtime"""
 
-    def __init__(self, testing: bool):
+    def __init__(self, testing: bool, bless: bool):
         self.level_selector = LevelSelector()
 
         self.level = self.level_selector.create_level()
         self.player = Character(symbol="$", x=self.level.width // 2, y=self.level.height // 2)
 
-        self.player.start()
+        if bless:
+            self.player.start()
+
         self.test_color_changer = ColorChanger(x=2, y=2, symbol="@")
         self.enemy_manager = EnemyManager(self.level)
 
-        self.enemy_manager.spawn_random_enemies(self.player.x, self.player.y, 0)
+        self.enemy_manager.spawn_random_enemies(self.player.x, self.player.y, 2)
         self.testing = testing
 
     def update_entity(self, entity: AbstractDungeonEntity) -> None:
@@ -40,10 +41,13 @@ class GameResources:
         """Draws a single entity onto the level"""
         self.level.board[entity.y][entity.x] = entity.symbol
 
-    def update(self) -> None:
+    def update(self, bless: bool) -> None:
         """Updates all game objects"""
-        # self.player.keyboard_input()
-        self.player.update()
+        if bless:
+            self.player.update()
+        else:
+            self.player.keyboard_input()
+
         self.update_entity(self.player)
 
         # if player walks on door generate new level
