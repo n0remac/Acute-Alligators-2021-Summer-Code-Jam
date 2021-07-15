@@ -55,10 +55,8 @@ class GameResources:
             self.player.y = self.level.entrance[0]
 
         for enemy in self.enemy_manager.enemy_list:
-            if (enemy > self.player) or (enemy.is_in_radius(self.player.x, self.player.y) and enemy != self.player):
+            if enemy.is_in_radius(self.player.x, self.player.y):
                 enemy.follow(self.testing)
-            elif self.player > enemy:
-                enemy.run(self.player.x, self.player.y)
             else:
                 enemy.mill()
 
