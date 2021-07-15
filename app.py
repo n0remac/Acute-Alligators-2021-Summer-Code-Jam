@@ -16,6 +16,7 @@ def end_screen(layout: Layout) -> None:
     with open('ascii.txt', 'r') as file:
         panel = Panel(Text(''.join(file.readlines()), style="bold red", justify='full'))
         layout["main_game"].update(panel)
+        layout["footer"].split_column((Panel(Text("Nice try.", style="bold red"))))
         sleep(3)
 
 
@@ -32,7 +33,10 @@ def run_game(layout: Layout, information: Information, game_resources: GameResou
 
     # Panels to update
     layout["main_game"].update(panel)
-    layout["footer"].update(enemies_in_radius)
+    if enemies_in_radius:
+        layout["footer"].split_row(*enemies_in_radius)
+    else:
+        layout["footer"].split_row(information.default_panel)
     layout["tree"].update(Panel('tree'))
     sleep(0.1)
 
@@ -42,14 +46,13 @@ def main() -> None:
     game_resources = GameResources(testing, bless)
     information = Information(game_resources)
     game_resources.draw()
-    enemies_in_radius = information.update_panel()
 
     game_panel = Panel(game_resources.level.to_string())
     layout = PanelLayout.make_layout()
     layout["main_game"].update(game_panel)
 
     # Panels to update
-    layout["footer"].update(enemies_in_radius)
+    layout["footer"].split_row(Panel(Text("No enemies have detected you yet.", style="bold green")))
     layout["tree"].update(Panel('tree'))
 
     with Live(layout, refresh_per_second=10, screen=True):
