@@ -2,6 +2,7 @@ import random
 
 from src.resources.constants import COLOR_CHANGER_CHOICES, PLAYER_COLOR_CHOICES
 
+from ..LevelSelector import LevelSelector
 from .entities.AbstractDungeonEntity import AbstractDungeonEntity
 from .entities.character import Character
 from .entities.ColorChanger import ColorChanger
@@ -11,11 +12,16 @@ from .entities.EnemyManager import EnemyManager
 class GameResources:
     """Holds objects that are used for during game runtime"""
 
-    def __init__(self, testing: bool):
-        self.level = Level(20, 15, [1, 2, 3, 4], [])
-        self.player = Character(symbol="$", x=self.level.width // 2,
-                                y=self.level.height // 2, color=self._choose_random_color('character'))
-        self.test_color_changer = ColorChanger(x=2, y=2, symbol="@", color=self._choose_random_color())
+    def __init__(self, testing: bool, bless: bool):
+        self.level_selector = LevelSelector()
+
+        self.level = self.level_selector.create_level()
+        self.player = Character(symbol="$", x=self.level.width // 2, y=self.level.height // 2)
+
+        if bless:
+            self.player.start()
+
+        self.test_color_changer = ColorChanger(x=2, y=2, symbol="@")
         self.enemy_manager = EnemyManager(self.level)
 
         self.enemy_manager.spawn_random_enemies(self.player.x, self.player.y, 2)
