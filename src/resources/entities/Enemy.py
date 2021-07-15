@@ -9,6 +9,7 @@ class Enemy(AbstractDungeonEntity):
     def __init__(self, aggro_radius: int, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.aggro_radius = aggro_radius
+        self.entity_type = "enemy"
         self.target: dict = {}
 
     def mill(self) -> None:
