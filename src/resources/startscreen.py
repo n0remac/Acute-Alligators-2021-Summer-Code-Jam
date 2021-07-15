@@ -1,5 +1,8 @@
+from time import sleep
+
 from pynput.keyboard import Key, Listener
 from rich.panel import Panel
+from rich.progress import Progress
 from rich.text import Text
 
 from .PanelLayout import PanelLayout
@@ -47,3 +50,16 @@ class StartScreen:
             guide_panel = Panel(Text(''.join(file.readlines()), style="bold green", justify="full"))
 
         return guide_panel
+
+    def loading_bar(self) -> None:
+        """Sets loading bar"""
+        with Progress() as progress:
+            task1 = progress.add_task("[bold blue] Configuring levels...", total=500)
+            task2 = progress.add_task("[bold green] Configuring player...", total=500)
+            task3 = progress.add_task("[bold red] Configuring enemies...", total=500)
+
+            while not progress.finished:
+                progress.update(task1, advance=1.7)
+                progress.update(task2, advance=2)
+                progress.update(task3, advance=1.8)
+                sleep(0.01)

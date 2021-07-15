@@ -20,11 +20,6 @@ class PanelLayout:
                 Layout(name='footer', ratio=2)
             )
         else:
-            layout = Layout(name="start_screen")
-
-            layout.split_column(
-                Layout(name="start", ratio=6),
-                Layout(name="loading", ratio=2),
-            )
+            layout = Layout(name="start")
 
         return layout

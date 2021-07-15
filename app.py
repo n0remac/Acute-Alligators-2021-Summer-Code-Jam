@@ -15,21 +15,25 @@ def start_screen() -> None:
     """Start screen"""
     screen = StartScreen()
     layout_screen = screen.layout
-    layout_screen["start"].split_row(
+    layout_screen.update(
         screen.display_screen()
     )
 
     with Live(layout_screen, refresh_per_second=10, screen=True):
         while screen.in_start:
             screen.keyboard_input()
+            # start screen
             if screen.guide is True:
-                layout_screen["start"].split_row(
+                layout_screen.update(
                     screen.display_guide()
                 )
             else:
-                layout_screen["start"].split_row(
+                layout_screen.update(
                     screen.display_screen()
                 )
+
+    # loading bar once 's' is pressed
+    screen.loading_bar()
 
 
 def end_screen(layout: Layout) -> None:
