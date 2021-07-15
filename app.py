@@ -48,7 +48,7 @@ def main() -> None:
     layout["footer"].update(Panel('footer'))
     layout["tree"].update(Panel('tree'))
 
-    with Live(layout, refresh_per_second=10, screen=False):
+    with Live(layout, refresh_per_second=10, screen=True):
         while game_resources.player.playing:
             run_game(layout, game_resources)
         end_screen(layout)
