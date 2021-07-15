@@ -25,3 +25,11 @@ class AbstractDungeonEntity:
 
         if color:
             self.symbol.stylize(color)
+            self.color = color
+
+    def change_shade(self) -> None:
+        """Change shade of symbol to darker"""
+        if self.color == "yellow":
+            self.symbol.stylize("dark_goldenrod")
+        else:
+            self.symbol.stylize("dark_" + self.color)
