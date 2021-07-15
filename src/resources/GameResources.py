@@ -74,13 +74,13 @@ class GameResources:
         self.draw_entity(self.player)
 
         result = self.enemy_manager.collisions_with_player(self.player)
-        if result == 'player':
-            # Remove Enemey
+        if isinstance(result, Character):
             self.player.playing = False
+            return False
+
         else:
-            # if len(result) > 0:
-            #     for enemy in result:
-            #         self.enemy_manager.enemy_list.pop(self.enemy_manager.enemy_list.index(enemy))
+            if str(result) != 'draw':
+                self.enemy_manager.remove_enemy(result)
             for enemy in self.enemy_manager.enemy_list:
                 self.draw_entity(enemy)
             self.draw_entity(self.test_color_changer)

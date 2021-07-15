@@ -24,27 +24,33 @@ class AbstractDungeonEntity:
         self.new_positions: dict = {"x": 0, "y": 0}
 
         if color:
-            self.symbol.stylize(color)
+            self.color = color
+            self.symbol.stylize(self.color)
 
     def __gt__(self, obj: type) -> bool:
         """Return True if current object is greater than"""
-        if self.symbol.style == "bold red" and self.symbol.style == "bold green":
+        # print('check gt')
+        # print('self: {} other: {}'.format(self.color, obj.color))
+
+        if self.color == "bold red" and obj.color == "bold green":
             state = True
-        elif self.symbol.style == "bold green" and self.symbol.style == "bold blue":
+        elif self.color == "bold green" and obj.color == "bold blue":
             state = True
-        elif self.symbol.style == "bold blue" and self.symbol.style == "bold red":
+        elif self.color == "bold blue" and obj.color == "bold red":
             state = True
         else:
             state = False
         return state
 
-    def __le__(self, obj: type) -> bool:
+    def __lt__(self, obj: type) -> bool:
         """Returns True if current object is less than"""
-        if self.symbol.style == "bold green" and self.symbol.style == "bold red":
+        # print('check lt')
+        # print('self: {} other: {}'.format(self.color, obj.color))
+        if self.color == "bold green" and obj.color == "bold red":
             state = True
-        elif self.symbol.style == "bold blue" and self.symbol.style == "bold green":
+        elif self.color == "bold blue" and obj.color == "bold green":
             state = True
-        elif self.symbol.style == "bold red" and self.symbol.style == "bold blue":
+        elif self.color == "bold red" and obj.color == "bold blue":
             state = True
         else:
             state = False
@@ -52,8 +58,12 @@ class AbstractDungeonEntity:
 
     def __eq__(self, obj: type) -> bool:
         """Compares AbstractEntityObjects for equality"""
-        return self.symbol.style == obj.symbol.style
+        # print('check eq')
+        # print('self: {} other: {}'.format(self.color, obj.color))
+        return self.color == obj.color
 
     def __ne__(self, obj: type) -> bool:
         """Compare AbstractEntityObjects for inequaulity"""
-        return self.symbol.style != obj.symbol.style
+        # print('check ne')
+        # print('self: {} other: {}'.format(self.color, obj.color))
+        return self.color != obj.color
