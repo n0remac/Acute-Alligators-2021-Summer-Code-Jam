@@ -19,7 +19,7 @@ class GameResources:
         self.test_color_changer = ColorChanger(x=2, y=2, symbol="@")
         self.enemy_manager = EnemyManager(self.level)
 
-        self.enemy_manager.spawn_random_enemies(self.player.x, self.player.y, 1)
+        self.enemy_manager.spawn_random_enemies(self.player.x, self.player.y, 0)
         self.testing = testing
 
     def update_entity(self, entity: AbstractDungeonEntity) -> None:
@@ -46,7 +46,11 @@ class GameResources:
         self.player.update()
         self.update_entity(self.player)
 
-        # self.enemy_manager.update(self.player.x, self.player.y)
+        # if player walks on door generate new level
+        if str(self.level.board[self.player.y][self.player.x]) == "#":
+            self.level = self.level_selector.create_level((self.player.y, self.player.x))
+            self.player.x = self.level.entrance[1]
+            self.player.y = self.level.entrance[0]
 
         for enemy in self.enemy_manager.enemy_list:
             if enemy.is_in_radius(self.player.x, self.player.y):

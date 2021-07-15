@@ -7,6 +7,4 @@ class Door(LevelResources):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.id: int = 0
-
-    def set_id(self, num):
-        self.id = num
+        self.pos: (int, int) = (0, 0)
