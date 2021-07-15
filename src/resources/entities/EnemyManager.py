@@ -13,6 +13,7 @@ class EnemyManager:
     def __init__(self, level: Level):
         self.enemy_list = []
         self.level = level
+        self.enemies_down = 0
 
     def spawn_random_enemies(self, x_player: int, y_player: int, num: int) -> None:
         """Spawns a new enemies randomly"""
@@ -27,15 +28,19 @@ class EnemyManager:
                 self.enemy_list.append(enemy)
 
     def collisions_with_player(self, player: Character) -> bool:
-        """Checks if player collided with enemy"""
-        enemies = []
+        """Checks if player collided with enemy, returns losing object"""
         for enemy in self.enemy_list:
-            if (enemy.x, enemy.y) == (player.x, player.y) and enemy > player:
-                return 'player'
-            else:
-                enemies.append(enemy)
-        return enemies
+            if (enemy.x, enemy.y) == (player.x, player.y) and (enemy < player):
+                return enemy
+            elif (enemy.x, enemy.y) == (player.x, player.y) and (enemy > player):
+                return player
+        return 'draw'
 
     def _choose_random_color(self) -> None:
         """Selects random color"""
         return choice(PLAYER_COLOR_CHOICES)
+
+    def remove_enemy(self, enemy: type) -> None:
+        """Replace enemy with symbol"""
+        self.enemies_down += 1
+        self.enemy_list.pop(self.enemy_list.index(enemy))
