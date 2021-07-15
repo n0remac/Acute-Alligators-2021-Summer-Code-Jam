@@ -79,6 +79,8 @@ class GameResources:
 
             self.update_entity(enemy)
 
+        self.enemy_manager.enemies_detected()
+
         if self.test_color_changer.collisions_with_player(self.player.x, self.player.y):
             self.test_color_changer.change_color(self.player)
 

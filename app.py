@@ -6,7 +6,12 @@ from rich.live import Live
 from rich.panel import Panel
 from rich.text import Text
 
+<<<<<<< HEAD
 from src.GameResources import GameResources
+=======
+from src.resources.GameResources import GameResources
+from src.resources.informationpanel import Information
+>>>>>>> e08a6b3 (Base of enemy detection in information panel finished)
 from src.resources.PanelLayout import PanelLayout
 from src.resources.startscreen import StartScreen
 
@@ -44,7 +49,7 @@ def end_screen(layout: Layout) -> None:
         sleep(3)
 
 
-def run_game(layout: Layout, game_resources: GameResources) -> Panel:
+def run_game(layout: Layout, information: Information, game_resources: GameResources) -> Panel:
     """
     This function in in charge of running the game. It will call update and draw for each game object.
 
@@ -52,7 +57,7 @@ def run_game(layout: Layout, game_resources: GameResources) -> Panel:
     """
     game_resources.update(bless)
     game_resources.draw()
-
+    enemies_in_radius = information.update_panel()
     panel = Panel(game_resources.level.to_string())
 
     # Panels to update
@@ -67,23 +72,24 @@ def run_game(layout: Layout, game_resources: GameResources) -> Panel:
 def main() -> None:
     """Main function that sets up game and runs main game loop"""
     game_resources = GameResources(testing, bless)
+    information = Information(game_resources)
     game_resources.draw()
+    enemies_in_radius = information.update_panel()
 
     game_panel = Panel(game_resources.level.to_string())
     layout = PanelLayout.make_layout(start=False)
     layout["main_game"].update(game_panel)
 
     # Panels to update
-    layout["footer"].update(Panel('footer'))
-    layout["tree"].update(
-        Panel(game_resources.node.display_node(), title="Current Location")
-    )
+
+    layout["footer"].update(enemies_in_radius)
+    layout["tree"].update(Panel('tree'))
 
     start_screen()
 
     with Live(layout, refresh_per_second=10, screen=False):
         while game_resources.player.playing:
-            run_game(layout, game_resources)
+            run_game(layout, information, game_resources)
         end_screen(layout)
 
 
