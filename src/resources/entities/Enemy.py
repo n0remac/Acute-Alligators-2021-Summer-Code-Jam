@@ -11,7 +11,7 @@ class Enemy(AbstractDungeonEntity):
         self.aggro_radius = aggro_radius
         self.entity_type = "enemy"
         self.target: dict = {}
-        self.file = file.name
+        self.file = f"{file.name!r}"
         self.player_detected = False
 
     def mill(self) -> None:
