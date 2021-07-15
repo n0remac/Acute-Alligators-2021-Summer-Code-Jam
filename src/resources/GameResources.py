@@ -1,3 +1,4 @@
+from ..fstree.FileStructureTree import FileStructureTree
 from .entities.AbstractDungeonEntity import AbstractDungeonEntity
 from .entities.character import Character
 from .entities.ColorChanger import ColorChanger
@@ -15,6 +16,7 @@ class GameResources:
         self.player.start()
         self.test_color_changer = ColorChanger(x=2, y=2, symbol="@")
         self.enemy_manager = EnemyManager(self.level)
+
         self.enemy_manager.spawn_random_enemies(self.player.x, self.player.y, 6)
         self.testing = testing
 
@@ -61,7 +63,6 @@ class GameResources:
 
         The last drawn entities will appear on top of ones before it.
         """
-
         if self.enemy_manager.collisions_with_player(self.player.x, self.player.y):
             self.player.playing = False
         else:
@@ -73,4 +74,4 @@ class GameResources:
 
     def overlaps(self, first_entity: AbstractDungeonEntity, second_entity: AbstractDungeonEntity) -> bool:
         """Checks if two entities overlap"""
-        return first_entity.x == second_entity.x and first_entity.x == y
+        return first_entity.x == second_entity.x and first_entity.x == second_entity.y
