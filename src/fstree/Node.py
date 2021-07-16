@@ -6,6 +6,7 @@ from os import DirEntry, fspath
 from rich.text import Text
 from rich.tree import Tree
 
+
 class Node:
     """The Node class represents a folder in the folder structure or a room in the dungeon."""
 
