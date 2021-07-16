@@ -2,7 +2,6 @@ from .fstree.FileStructureTree import FileStructureTree
 from .LevelSelector import LevelSelector
 from .resources.entities.AbstractDungeonEntity import AbstractDungeonEntity
 from .resources.entities.character import Character
-from .resources.entities.ColorChangerManager import ColorChangerManager
 from .resources.entities.EnemyManager import EnemyManager
 
 
@@ -20,10 +19,8 @@ class GameResources:
         if bless:
             self.player.start()
 
-        self.color_changer_manager = ColorChangerManager(self.level)
         self.enemy_manager = EnemyManager(self.level)
 
-        self.color_changer_manager.spawn_random_changers(self.player.x, self.player.y)
         self.enemy_manager.spawn_random_enemies(self.player.x, self.player.y, 0)
         self.testing = testing
 
@@ -65,9 +62,6 @@ class GameResources:
 
         # if player walks on door generate new level
         if str(self.level.board[self.player.y][self.player.x]) == "#":
-            # self.color_changer_manager.color_changer_list.clear()
-            # self.color_changer_manager.spawn_random_changers(self.player.x, self.player.y)
-
             self.level = self.level_selector.create_level((self.player.y, self.player.x))
             # self.level_selector.cur is used for storing the current node,
             # which would be the current level that the game is working off of
@@ -83,9 +77,14 @@ class GameResources:
 
             self.update_entity(enemy)
 
-        new_color = self.color_changer_manager.collisions_with_player(self.player.x, self.player.y)
-        if new_color:
-            self.color_changer_manager.change_color(self.player, new_color)
+        for color_changer in self.level.color_changers:
+            overlapping = self.overlaps(color_changer, self.player)
+            if overlapping:
+                self.player.symbol.stylize(color_changer.color)
+
+        # new_color = self.color_changer_manager.collisions_with_player(self.player.x, self.player.y)
+        # if new_color:
+        #     self.color_changer_manager.change_color(self.player, new_color)
 
     def draw(self) -> bool:
         """
@@ -112,4 +111,6 @@ class GameResources:
 
     def overlaps(self, first_entity: AbstractDungeonEntity, second_entity: AbstractDungeonEntity) -> bool:
         """Checks if two entities overlap"""
-        return first_entity.x == second_entity.x and first_entity.x == second_entity.y
+        print(f"first {first_entity.x}, {first_entity.y}")
+        print(f"second {second_entity.x}, {second_entity.y}")
+        return (first_entity.y, first_entity.x) == (second_entity.y, second_entity.x)
