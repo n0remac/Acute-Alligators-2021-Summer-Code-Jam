@@ -23,7 +23,7 @@ class GameResources:
         self.test_color_changer = ColorChanger(x=2, y=2, symbol="@")
         self.enemy_manager = EnemyManager(self.level)
 
-        self.enemy_manager.spawn_random_enemies(self.player.x, self.player.y, self.level_selector.cur.files)
+        self.enemy_manager.spawn_random_enemies(self.player.x, self.player.y, self.level_selector.cur.files, 1)
         self.testing = testing
 
     def update_entity(self, entity: AbstractDungeonEntity) -> None:
@@ -32,22 +32,25 @@ class GameResources:
         y = entity.new_positions["y"]
         try:
             if str(self.level.board[entity.y + y][entity.x + x]) in ("'", "@") or \
-                    (entity.__class__.__name__ != 'Enemy' and str(
+                    (entity.entity_type != 'enemy' and str(
                         self.level.board[entity.y + y][entity.x + x]) == '#') and \
                     (entity.y + y, entity.x + x) != (self.player.y, self.player.x):
-                self.level.board[entity.y][entity.x] = entity.ground_symbol
-                if entity.entity_type == "enemy":
-                    if entity.x + x > 0 and entity.y + y > 0:
+                if entity.entity_type == 'enemy' and (entity.x + x, entity.y + y) == (self.player.x, self.player.y):
+                    pass
+                else:
+                    self.level.board[entity.y][entity.x] = entity.ground_symbol
+                    if entity.entity_type == "enemy":
+                        if entity.x + x > 0 and entity.y + y > 0:
+                            entity.x += x
+                            entity.y += y
+                        else:
+                            entity.x -= x
+                            entity.y -= y
+                    else:
                         entity.x += x
                         entity.y += y
-                    else:
-                        entity.x -= x
-                        entity.y -= y
-                else:
-                    entity.x += x
-                    entity.y += y
-                entity.ground_symbol = self.level.board[entity.y][entity.x]
-                entity.new_positions = {"x": 0, "y": 0}
+                    entity.ground_symbol = self.level.board[entity.y][entity.x]
+                    entity.new_positions = {"x": 0, "y": 0}
         except IndexError:
             pass
 
@@ -70,6 +73,7 @@ class GameResources:
             # self.level_selector.cur is used for storing the current node,
             # which would be the current level that the game is working off of
             self.node = self.level_selector.cur
+
             self.player.x = self.level.entrance[1]
             self.player.y = self.level.entrance[0]
 

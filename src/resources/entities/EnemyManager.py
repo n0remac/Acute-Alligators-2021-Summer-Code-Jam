@@ -13,10 +13,10 @@ class EnemyManager:
         self.enemy_in_radius = []
         self.level = level
 
-    def spawn_random_enemies(self, x_player: int, y_player: int, files_in_dir: list) -> None:
+    def spawn_random_enemies(self, x_player: int, y_player: int, files_in_dir: list, num: int = 0) -> None:
         """Spawns a new enemies randomly"""
-        num = len(files_in_dir) - 1
-        while num + 1 > 0:
+        # num = len(files_in_dir) - 1
+        while num:
             y = randint(2, self.level.height-2)
             x = randint(2, self.level.width-2)
             disallowed_spaces = {'x': (x_player - 1, x_player + 1), 'y': (y_player - 1, y_player + 1)}

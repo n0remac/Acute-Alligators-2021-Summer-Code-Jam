@@ -63,6 +63,7 @@ def run_game(layout: Layout, information: Information, game_resources: GameResou
     if enemies_in_radius:
         layout["display_enemies"].split_row(enemies_in_radius)
     else:
+
         layout["display_enemies"].split_row(information.enemy_default_panel)
     layout["tree"].update(
         Panel(game_resources.node.display_node(), title="Current Location")
