@@ -14,7 +14,7 @@ class GameResources:
         self.node = self.tree.root
         self.level_selector = LevelSelector(self.tree)
 
-        self.level = self.level_selector.create_level(game_started=False)
+        self.level = self.level_selector.create_level()
         self.player = Character(symbol="$", x=self.level.width // 2, y=self.level.height // 2)
 
         if bless:
@@ -54,7 +54,7 @@ class GameResources:
 
         # if player walks on door generate new level
         if str(self.level.board[self.player.y][self.player.x]) == "#":
-            self.level = self.level_selector.create_level((self.player.y, self.player.x), game_started=True)
+            self.level = self.level_selector.create_level((self.player.y, self.player.x))
             # self.level_selector.cur is used for storing the current node,
             # which would be the current level that the game is working off of
             self.node = self.level_selector.cur
