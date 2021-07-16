@@ -1,8 +1,9 @@
-from .fstree.FileStructureTree import FileStructureTree
-from .LevelSelector import LevelSelector
-from .resources.entities.AbstractDungeonEntity import AbstractDungeonEntity
-from .resources.entities.character import Character
-from .resources.entities.EnemyManager import EnemyManager
+from ..LevelSelector import LevelSelector
+from .entities.AbstractDungeonEntity import AbstractDungeonEntity
+from .entities.character import Character
+from .entities.ColorChanger import ColorChanger
+from .entities.Item import Item
+from .entities.EnemyManager import EnemyManager
 
 
 class GameResources:
@@ -19,8 +20,11 @@ class GameResources:
         if bless:
             self.player.start()
 
-        self.enemy_manager = EnemyManager(self.level)
+        self.test_color_changer = ColorChanger(x=2, y=2, symbol="@")
+        self.test_item = Item(symbol='k', x=self.level.width // 2+1, y=self.level.height // 2+1)
+        self.collected_items = []
 
+        self.enemy_manager = EnemyManager(self.level)
         self.enemy_manager.spawn_random_enemies(self.player.x, self.player.y, 0)
         self.testing = testing
 
@@ -29,7 +33,7 @@ class GameResources:
         x = entity.new_positions["x"]
         y = entity.new_positions["y"]
         try:
-            if str(self.level.board[entity.y + y][entity.x + x]) in ("'", "$", "@") or \
+            if str(self.level.board[entity.y + y][entity.x + x]) in ("'", "$", "@", "k") or \
                     (entity.__class__.__name__ != 'Enemy' and str(
                         self.level.board[entity.y + y][entity.x + x]) == '#'):
                 self.level.board[entity.y][entity.x] = entity.ground_symbol
@@ -82,6 +86,12 @@ class GameResources:
             if overlapping:
                 self.player.symbol.stylize(color_changer.color)
 
+        if self.test_item.collected == False:
+            if self.test_item.collisions_with_player(self.player.x, self.player.y):
+                self.test_item.collect_item(self.level.board)
+                self.collected_items.append(self.test_item.symbol)
+                print(self.collected_items)
+
     def draw(self) -> bool:
         """
         Function to draw entities in game resources class.
@@ -100,8 +110,12 @@ class GameResources:
                 self.enemy_manager.remove_enemy(result)
             for enemy in self.enemy_manager.enemy_list:
                 self.draw_entity(enemy)
+
             for color_changer in self.level.color_changers:
                 self.draw_entity(color_changer)
+
+            if self.test_item.collected == False:
+                self.draw_entity(self.test_item)
 
         self.draw_entity(self.player)
 
