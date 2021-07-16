@@ -6,7 +6,7 @@ from rich.live import Live
 from rich.panel import Panel
 from rich.text import Text
 
-from src.resources.GameResources import GameResources
+from src.GameResources import GameResources
 from src.resources.PanelLayout import PanelLayout
 
 
@@ -32,7 +32,9 @@ def run_game(layout: Layout, game_resources: GameResources) -> Panel:
     # Panels to update
     layout["main_game"].update(panel)
     layout["footer"].update(Panel('footer'))
-    layout["tree"].update(Panel('tree'))
+    layout["tree"].update(
+        Panel(game_resources.node.display_node(), title="Current Location")
+    )
     sleep(0.1)
 
 
@@ -47,7 +49,9 @@ def main() -> None:
 
     # Panels to update
     layout["footer"].update(Panel('footer'))
-    layout["tree"].update(Panel('tree'))
+    layout["tree"].update(
+        Panel(game_resources.node.display_node(), title="Current Location")
+    )
 
     with Live(layout, refresh_per_second=10, screen=True):
         while game_resources.player.playing:
