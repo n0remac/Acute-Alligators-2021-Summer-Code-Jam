@@ -31,7 +31,7 @@ class EnemyManager:
         for enemy in self.enemy_list:
             if (enemy.x, enemy.y) == (player.x, player.y) and (enemy < player):
                 return enemy
-            elif (enemy.x, enemy.y) == (player.x, player.y) and (enemy > player):
+            elif (enemy.x, enemy.y) == (player.x, player.y) and ((enemy > player) or (player.color == "bold white")):
                 return player
         return 'draw'
 

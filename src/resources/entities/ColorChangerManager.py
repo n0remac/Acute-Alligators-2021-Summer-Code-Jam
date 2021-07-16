@@ -42,4 +42,5 @@ class ColorChangerManager:
 
     def change_color(self, player: Character, color: str) -> None:
         """Will change color of player instance"""
+        player.color = color
         player.symbol.stylize(color)

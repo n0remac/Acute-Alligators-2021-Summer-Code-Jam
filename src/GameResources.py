@@ -15,7 +15,7 @@ class GameResources:
         self.level_selector = LevelSelector(self.tree)
 
         self.level = self.level_selector.create_level()
-        self.player = Character(symbol="$", x=self.level.width // 2, y=self.level.height // 2)
+        self.player = Character(symbol="$", x=self.level.width // 2, y=self.level.height // 2, color="bold white")
 
         if bless:
             self.player.start()
