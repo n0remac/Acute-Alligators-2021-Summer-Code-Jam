@@ -1,4 +1,3 @@
-
 from .fstree.FileStructureTree import FileStructureTree
 from .LevelSelector import LevelSelector
 from .resources.entities.AbstractDungeonEntity import AbstractDungeonEntity
@@ -35,7 +34,7 @@ class GameResources:
         x = entity.new_positions["x"]
         y = entity.new_positions["y"]
         try:
-            if str(self.level.board[entity.y + y][entity.x + x]) in ("'", "$", "@", "k") or \
+            if str(self.level.board[entity.y + y][entity.x + x]) in ("'", "$", "@") or \
                     (entity.__class__.__name__ != 'Enemy' and str(
                         self.level.board[entity.y + y][entity.x + x]) == '#'):
                 self.level.board[entity.y][entity.x] = entity.ground_symbol
@@ -49,9 +48,15 @@ class GameResources:
                 else:
                     entity.x += x
                     entity.y += y
-                if entity.entity_type == "item":
-                    entity.ground_symbol = self.level.board[entity.y][entity.x]
+
+                entity.ground_symbol = self.level.board[entity.y][entity.x]
                 entity.new_positions = {"x": 0, "y": 0}
+            if str(self.level.board[entity.y + y][entity.x + x]) in ("k"):
+                self.level.board[entity.y][entity.x] = entity.ground_symbol
+                entity.x += x
+                entity.y += y
+                entity.new_positions = {"x": 0, "y": 0}
+
         except IndexError:
             pass
 
