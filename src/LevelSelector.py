@@ -1,5 +1,3 @@
-from random import choice
-
 from .fstree.FileStructureTree import FileStructureTree
 from .resources.entities.level.Level import Level
 
