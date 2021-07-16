@@ -30,6 +30,7 @@ class ColorChangerManager:
                 color = choice(new_list)
                 new_list.pop(new_list.index(color))
                 color_changer = ColorChanger(x=x, y=y, symbol='@', color=color)
+
                 self.color_changer_list.append(color_changer)
                 color = ''
 

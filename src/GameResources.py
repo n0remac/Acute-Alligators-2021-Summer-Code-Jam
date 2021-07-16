@@ -24,7 +24,7 @@ class GameResources:
         self.enemy_manager = EnemyManager(self.level)
 
         self.color_changer_manager.spawn_random_changers(self.player.x, self.player.y)
-        self.enemy_manager.spawn_random_enemies(self.player.x, self.player.y, 2)
+        self.enemy_manager.spawn_random_enemies(self.player.x, self.player.y, 0)
         self.testing = testing
 
     def update_entity(self, entity: AbstractDungeonEntity) -> None:
@@ -65,8 +65,8 @@ class GameResources:
 
         # if player walks on door generate new level
         if str(self.level.board[self.player.y][self.player.x]) == "#":
-            self.color_changer_manager.color_changer_list.clear()
-            self.color_changer_manager.spawn_random_changers(self.player.x, self.player.y)
+            # self.color_changer_manager.color_changer_list.clear()
+            # self.color_changer_manager.spawn_random_changers(self.player.x, self.player.y)
 
             self.level = self.level_selector.create_level((self.player.y, self.player.x))
             # self.level_selector.cur is used for storing the current node,
@@ -105,7 +105,7 @@ class GameResources:
                 self.enemy_manager.remove_enemy(result)
             for enemy in self.enemy_manager.enemy_list:
                 self.draw_entity(enemy)
-            for color_changer in self.color_changer_manager.color_changer_list:
+            for color_changer in self.level.color_changers:
                 self.draw_entity(color_changer)
 
         self.draw_entity(self.player)
