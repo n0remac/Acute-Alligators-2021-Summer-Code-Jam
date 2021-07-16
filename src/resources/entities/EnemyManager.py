@@ -1,6 +1,5 @@
-from random import choice, randint
+from random import randint
 
-from src.resources.constants import PLAYER_COLOR_CHOICES
 from src.resources.entities.character import Character
 from src.resources.entities.level import Level
 
@@ -17,22 +16,14 @@ class EnemyManager:
 
     def spawn_random_enemies(self, x_player: int, y_player: int, num: int) -> None:
         """Spawns a new enemies randomly"""
-        selected = []
-        color = ''
-        found_color = False
         while num > 0:
-            while not found_color:
-                color = choice(COLOR_CHOICES)
-                if color not in selected:
-                    found_color = True
-                    selected.append(color)
             y = randint(2, self.level.height-2)
             x = randint(2, self.level.width-2)
             disallowed_spaces = {'x': (x_player - 1, x_player + 1), 'y': (y_player - 1, y_player + 1)}
             if str(self.level.board[y][x]) == "'" and \
                     x not in disallowed_spaces['x'] and y not in disallowed_spaces['y']:
                 num -= 1
-                enemy = Enemy(aggro_radius=3, x=x, y=y, symbol='^', color=self._choose_random_color())
+                enemy = Enemy(aggro_radius=3, x=x, y=y, symbol='^')
                 self.enemy_list.append(enemy)
 
     def collisions_with_player(self, player: Character) -> bool:
@@ -43,10 +34,6 @@ class EnemyManager:
             elif (enemy.x, enemy.y) == (player.x, player.y) and (enemy > player):
                 return player
         return 'draw'
-
-    def _choose_random_color(self) -> None:
-        """Selects random color"""
-        return choice(PLAYER_COLOR_CHOICES)
 
     def remove_enemy(self, enemy: type) -> None:
         """Replace enemy with symbol"""

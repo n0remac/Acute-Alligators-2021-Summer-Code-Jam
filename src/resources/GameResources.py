@@ -1,11 +1,7 @@
-import random
-
-from src.resources.constants import COLOR_CHANGER_CHOICES, PLAYER_COLOR_CHOICES
-
 from ..LevelSelector import LevelSelector
 from .entities.AbstractDungeonEntity import AbstractDungeonEntity
 from .entities.character import Character
-from .entities.ColorChanger import ColorChanger
+from .entities.ColorChangerManager import ColorChangerManager
 from .entities.EnemyManager import EnemyManager
 
 
@@ -16,15 +12,15 @@ class GameResources:
         self.level_selector = LevelSelector()
 
         self.level = self.level_selector.create_level()
-        self.player = Character(symbol="$", x=self.level.width // 2, y=self.level.height // 2,
-                                color=self._choose_random_color('character'))
+        self.player = Character(symbol="$", x=self.level.width // 2, y=self.level.height // 2)
 
         if bless:
             self.player.start()
 
-        self.test_color_changer = ColorChanger(x=2, y=2, symbol="@", color=self._choose_random_color())
+        self.color_changer_manager = ColorChangerManager(self.level)
         self.enemy_manager = EnemyManager(self.level)
 
+        self.color_changer_manager.spawn_random_changers(self.player.x, self.player.y)
         self.enemy_manager.spawn_random_enemies(self.player.x, self.player.y, 2)
         self.testing = testing
 
@@ -33,7 +29,7 @@ class GameResources:
         x = entity.new_positions["x"]
         y = entity.new_positions["y"]
         try:
-            if str(self.level.board[entity.y + y][entity.x + x]) in ("'", "$", "@", "#"):
+            if str(self.level.board[entity.y + y][entity.x + x]) in ("'", "$", "@", "#", "^"):
                 self.level.board[entity.y][entity.x] = entity.ground_symbol
                 entity.x += x
                 entity.y += y
@@ -69,8 +65,9 @@ class GameResources:
 
             self.update_entity(enemy)
 
-        if self.test_color_changer.collisions_with_player(self.player.x, self.player.y):
-            self.test_color_changer.change_color(self.player)
+        new_color = self.color_changer_manager.collisions_with_player(self.player.x, self.player.y)
+        if new_color:
+            self.color_changer_manager.change_color(self.player, new_color)
 
     def draw(self) -> bool:
         """
@@ -90,18 +87,11 @@ class GameResources:
                 self.enemy_manager.remove_enemy(result)
             for enemy in self.enemy_manager.enemy_list:
                 self.draw_entity(enemy)
-            self.draw_entity(self.test_color_changer)
+            for color_changer in self.color_changer_manager.color_changer_list:
+                self.draw_entity(color_changer)
 
         self.draw_entity(self.player)
 
     def overlaps(self, first_entity: AbstractDungeonEntity, second_entity: AbstractDungeonEntity) -> bool:
         """Checks if two entities overlap"""
         return first_entity.x == second_entity.x and first_entity.x == second_entity.y
-
-    def _choose_random_color(self, entity: str = None) -> None:
-        """Selects random color"""
-        if entity == 'character':
-            color = random.choice(PLAYER_COLOR_CHOICES)
-        else:
-            color = random.choice(COLOR_CHANGER_CHOICES)
-        return color

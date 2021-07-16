@@ -1,4 +1,8 @@
+import random
+
 from rich.text import Text
+
+from src.resources.constants import COLOR_CHANGER_CHOICES, PLAYER_COLOR_CHOICES
 
 from .level.LevelResources import LevelResources
 from .level.Tile import Tile
@@ -13,7 +17,7 @@ class AbstractDungeonEntity:
         y: int = 0,
         x: int = 0,
         symbol: str = "$",
-        color: str = "white",
+        color: str = None,
     ):
         super().__init__()
         self.x = x
@@ -22,10 +26,7 @@ class AbstractDungeonEntity:
         self.ground_symbol: LevelResources = Tile(text=ground_symbol, style="bold magenta")
 
         self.new_positions: dict = {"x": 0, "y": 0}
-
-        if color:
-            self.color = color
-            self.symbol.stylize(self.color)
+        self.color = self.set_color(color)
 
     def __gt__(self, obj: type) -> bool:
         """Return True if current object is greater than"""
@@ -58,3 +59,18 @@ class AbstractDungeonEntity:
     def __ne__(self, obj: type) -> bool:
         """Compare AbstractEntityObjects for inequaulity"""
         return self.color != obj.color
+
+    def set_color(self, color: str) -> None:
+        """Determines if color can be set or called by random"""
+        if not color:
+            color = self._choose_random_color()
+        self.symbol.stylize(color)
+        return color
+
+    def _choose_random_color(self) -> None:
+        """Selects random color based on instantiated class"""
+        if self.__class__.__name__ in ['Enemy', 'Character']:
+            color = random.choice(PLAYER_COLOR_CHOICES)
+        else:
+            color = random.choice(COLOR_CHANGER_CHOICES)
+        return color
