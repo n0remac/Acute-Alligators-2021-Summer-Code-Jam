@@ -54,14 +54,15 @@ def run_game(layout: Layout, game_resources: GameResources) -> Panel:
     game_resources.draw()
 
     panel = Panel(game_resources.level.to_string())
-    items = Panel(game_resources.collected_items)
 
     # Panels to update
     layout["main_game"].update(panel)
     layout["tree"].update(
         Panel(game_resources.node.display_node(), title="Current Location")
     )
-    layout["inventory"].update(Panel('inventory'))
+    inventory = Text("\n".join(game_resources.collected_items))
+    print(inventory)
+    layout["inventory"].update(Panel(inventory))
     sleep(0.1)
 
 

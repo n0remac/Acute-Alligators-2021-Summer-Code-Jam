@@ -89,7 +89,7 @@ class GameResources:
         if self.test_item.collected == False:
             if self.test_item.collisions_with_player(self.player.x, self.player.y):
                 self.test_item.collect_item(self.level.board)
-                self.collected_items.append(self.test_item.symbol)
+                self.collected_items.append(self.test_item.symbol._text[0])
                 print(self.collected_items)
 
     def draw(self) -> bool:
