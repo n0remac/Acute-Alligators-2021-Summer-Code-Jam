@@ -57,7 +57,7 @@ def run_game(layout: Layout, game_resources: GameResources) -> Panel:
 
     # Panels to update
     layout["main_game"].update(panel)
-    layout["footer"].update(Panel('footer'))
+    layout["inventory"].update(Panel('inventory'))
     layout["tree"].update(Panel('tree'))
     sleep(0.1)
 
