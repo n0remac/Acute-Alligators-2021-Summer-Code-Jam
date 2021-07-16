@@ -1,9 +1,11 @@
-from ..LevelSelector import LevelSelector
-from .entities.AbstractDungeonEntity import AbstractDungeonEntity
-from .entities.character import Character
-from .entities.ColorChanger import ColorChanger
-from .entities.Item import Item
-from .entities.EnemyManager import EnemyManager
+
+from .fstree.FileStructureTree import FileStructureTree
+from .LevelSelector import LevelSelector
+from .resources.entities.AbstractDungeonEntity import AbstractDungeonEntity
+from .resources.entities.character import Character
+from .resources.entities.ColorChanger import ColorChanger
+from .resources.entities.EnemyManager import EnemyManager
+from .resources.entities.Item import Item
 
 
 class GameResources:
@@ -90,6 +92,12 @@ class GameResources:
             if self.test_item.collisions_with_player(self.player.x, self.player.y):
                 self.test_item.collect_item(self.level.board)
                 self.collected_items.append(self.test_item.symbol._text[0])
+                print(self.collected_items)
+
+        if self.test_item.collected == False:
+            if self.test_item.collisions_with_player(self.player.x, self.player.y):
+                self.test_item.collect_item(self.level.board)
+                self.collected_items.append(self.test_item.symbol)
                 print(self.collected_items)
 
     def draw(self) -> bool:
