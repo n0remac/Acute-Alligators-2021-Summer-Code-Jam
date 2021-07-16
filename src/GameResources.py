@@ -82,10 +82,6 @@ class GameResources:
             if overlapping:
                 self.player.symbol.stylize(color_changer.color)
 
-        # new_color = self.color_changer_manager.collisions_with_player(self.player.x, self.player.y)
-        # if new_color:
-        #     self.color_changer_manager.change_color(self.player, new_color)
-
     def draw(self) -> bool:
         """
         Function to draw entities in game resources class.
@@ -111,6 +107,4 @@ class GameResources:
 
     def overlaps(self, first_entity: AbstractDungeonEntity, second_entity: AbstractDungeonEntity) -> bool:
         """Checks if two entities overlap"""
-        print(f"first {first_entity.x}, {first_entity.y}")
-        print(f"second {second_entity.x}, {second_entity.y}")
         return (first_entity.y, first_entity.x) == (second_entity.y, second_entity.x)
