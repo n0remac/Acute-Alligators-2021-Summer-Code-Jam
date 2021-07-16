@@ -68,6 +68,7 @@ class GameResources:
             # self.level_selector.cur is used for storing the current node,
             # which would be the current level that the game is working off of
             self.node = self.level_selector.cur
+
             self.player.x = self.level.entrance[1]
             self.player.y = self.level.entrance[0]
 
@@ -80,6 +81,8 @@ class GameResources:
             self.update_entity(enemy)
 
         self.enemy_manager.enemies_detected()
+        for enemy_in_radius in self.enemy_manager.enemy_in_radius:
+            self.player.health -= enemy_in_radius.hit()
 
         if self.test_color_changer.collisions_with_player(self.player.x, self.player.y):
             self.test_color_changer.change_color(self.player)
@@ -90,7 +93,7 @@ class GameResources:
 
         The last drawn entities will appear on top of ones before it.
         """
-        if self.enemy_manager.collisions_with_player(self.player.x, self.player.y):
+        if self.player.health < 0:
             self.player.playing = False
         else:
             for enemy in self.enemy_manager.enemy_list:

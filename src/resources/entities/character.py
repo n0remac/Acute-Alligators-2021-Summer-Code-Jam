@@ -16,6 +16,7 @@ class Character(AbstractDungeonEntity):
         super().__init__(*args, **kwargs)
         self.entity_type = "character"
         self.playing = True
+        self.health = 100
         self.commands = deque()
 
     def press(self, key: Key) -> None:

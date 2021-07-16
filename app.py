@@ -59,11 +59,12 @@ def run_game(layout: Layout, information: Information, game_resources: GameResou
 
     # Panels to update
     layout["main_game"].update(panel)
-
+    layout["player_health"].split_row(information.get_player_health())
     if enemies_in_radius:
-        layout["footer"].split_row(*enemies_in_radius)
+        layout["display_enemies"].split_row(enemies_in_radius)
     else:
-        layout["footer"].split_row(information.default_panel)
+
+        layout["display_enemies"].split_row(information.enemy_default_panel)
     layout["tree"].update(
         Panel(game_resources.node.display_node(), title="Current Location")
     )
@@ -81,7 +82,8 @@ def main() -> None:
     layout["main_game"].update(game_panel)
 
     # Panels to update
-    layout["footer"].split_row(Panel(Text("No enemies have detected you yet.", style="bold green")))
+    layout["player_health"].split_row(Panel(Text("100 HP", style="green")))
+    layout["display_enemies"].split_row(information.update_panel())
     layout["tree"].update(Panel('tree'))
 
     start_screen()
