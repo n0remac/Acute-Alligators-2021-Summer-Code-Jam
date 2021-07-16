@@ -19,12 +19,14 @@ class PanelLayout:
                 Layout(name='main_game', ratio=7),
                 Layout(name='footer', ratio=2)
             )
+
+            layout['footer'].split_column(
+                Layout(name="player_health", ratio=3),
+                Layout(name="display_enemies", ratio=6)
+            )
         else:
             layout = Layout(name="start")
 
-        layout['footer'].split_column(
-            Layout(name="player_health", ratio=3),
-            Layout(name="display_enemies", ratio=6)
-        )
+
 
         return layout
