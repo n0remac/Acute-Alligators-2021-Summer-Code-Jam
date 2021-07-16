@@ -34,7 +34,7 @@ class GameResources:
         x = entity.new_positions["x"]
         y = entity.new_positions["y"]
         try:
-            if str(self.level.board[entity.y + y][entity.x + x]) in ("'", "$", "@", "k") or \
+            if str(self.level.board[entity.y + y][entity.x + x]) in ("'", "$", "@") or \
                     (entity.__class__.__name__ != 'Enemy' and str(
                         self.level.board[entity.y + y][entity.x + x]) == '#'):
                 self.level.board[entity.y][entity.x] = entity.ground_symbol
@@ -48,9 +48,15 @@ class GameResources:
                 else:
                     entity.x += x
                     entity.y += y
-                if entity.entity_type == "item":
-                    entity.ground_symbol = self.level.board[entity.y][entity.x]
+
+                entity.ground_symbol = self.level.board[entity.y][entity.x]
                 entity.new_positions = {"x": 0, "y": 0}
+            if str(self.level.board[entity.y + y][entity.x + x]) in ("k"):
+                self.level.board[entity.y][entity.x] = entity.ground_symbol
+                entity.x += x
+                entity.y += y
+                entity.new_positions = {"x": 0, "y": 0}
+
         except IndexError:
             pass
 
@@ -89,10 +95,7 @@ class GameResources:
         if self.test_item.collected is False:
             if self.test_item.collisions_with_player(self.player.x, self.player.y):
                 self.test_item.collect_item()
-
                 self.collected_items.append(self.test_item.symbol._text[0])
-
-                print(self.collected_items)
 
     def draw(self) -> bool:
         """
