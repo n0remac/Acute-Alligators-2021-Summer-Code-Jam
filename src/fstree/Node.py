@@ -16,6 +16,7 @@ class Node:
         self.path = path  # the path from the root dir (e.g. ./fstree/Node.py)
         self.children: list[DirEntry] = []  # a list of folders in the current folder
         self.files: list[DirEntry] = []  # a list of files in the current folder
+
         self.depth = fspath(self.path).count("\\") if os.name == "nt" else fspath(self.path).count("/")
 
     def display(self) -> None:
