@@ -6,7 +6,7 @@ from rich.live import Live
 from rich.panel import Panel
 from rich.text import Text
 
-from src.resources.GameResources import GameResources
+from src.GameResources import GameResources
 from src.resources.informationpanel import Information
 from src.resources.PanelLayout import PanelLayout
 from src.resources.startscreen import StartScreen
@@ -42,7 +42,7 @@ def end_screen(layout: Layout) -> None:
     with open('ascii.txt', 'r') as file:
         panel = Panel(Text(''.join(file.readlines()), style="bold red", justify='full'))
         layout["main_game"].update(panel)
-        layout["footer"].split_column((Panel(Text("Nice try.", style="bold red"))))
+        # layout["footer"].split_column((Panel(Text("Nice try.", style="bold red"))))
         sleep(3)
 
 
