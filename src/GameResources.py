@@ -1,16 +1,19 @@
-from ..LevelSelector import LevelSelector
-from .entities.AbstractDungeonEntity import AbstractDungeonEntity
-from .entities.character import Character
-from .entities.ColorChanger import ColorChanger
-from .entities.Item import Item
-from .entities.EnemyManager import EnemyManager
+from .fstree.FileStructureTree import FileStructureTree
+from .LevelSelector import LevelSelector
+from .resources.entities.AbstractDungeonEntity import AbstractDungeonEntity
+from .resources.entities.character import Character
+from .resources.entities.ColorChanger import ColorChanger
+from .resources.entities.EnemyManager import EnemyManager
+from .resources.entities.Item import Item
 
 
 class GameResources:
     """Holds objects that are used for during game runtime"""
 
     def __init__(self, testing: bool, bless: bool):
-        self.level_selector = LevelSelector()
+        self.tree = FileStructureTree('.')
+        self.node = self.tree.root
+        self.level_selector = LevelSelector(self.tree)
 
         self.level = self.level_selector.create_level()
         self.player = Character(symbol="$", x=self.level.width // 2, y=self.level.height // 2)
@@ -60,12 +63,14 @@ class GameResources:
             self.player.update()
         else:
             self.player.keyboard_input()
-
         self.update_entity(self.player)
 
         # if player walks on door generate new level
         if str(self.level.board[self.player.y][self.player.x]) == "#":
             self.level = self.level_selector.create_level((self.player.y, self.player.x))
+            # self.level_selector.cur is used for storing the current node,
+            # which would be the current level that the game is working off of
+            self.node = self.level_selector.cur
             self.player.x = self.level.entrance[1]
             self.player.y = self.level.entrance[0]
 
@@ -83,7 +88,9 @@ class GameResources:
         if self.test_item.collected == False:
             if self.test_item.collisions_with_player(self.player.x, self.player.y):
                 self.test_item.collect_item(self.level.board)
+
                 self.collected_items.append(self.test_item.symbol._text[0])
+
                 print(self.collected_items)
 
     def draw(self) -> bool:
