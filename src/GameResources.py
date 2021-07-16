@@ -70,6 +70,9 @@ class GameResources:
 
         # if player walks on door generate new level
         if str(self.level.board[self.player.y][self.player.x]) == "#":
+            self.color_changer_manager.color_changer_list.clear()
+            self.color_changer_manager.spawn_random_changers(self.player.x, self.player.y)
+
             self.level = self.level_selector.create_level((self.player.y, self.player.x))
             # self.level_selector.cur is used for storing the current node,
             # which would be the current level that the game is working off of
