@@ -23,7 +23,7 @@ class EnemyManager:
             if str(self.level.board[y][x]) == "'" and \
                     x not in disallowed_spaces['x'] and y not in disallowed_spaces['y']:
                 num -= 1
-                enemy = Enemy(aggro_radius=3, x=x, y=y, symbol='^', file=files_in_dir[num])
+                enemy = Enemy(aggro_radius=2, x=x, y=y, symbol='^', file=files_in_dir[num])
                 self.enemy_list.append(enemy)
 
     def enemies_detected(self) -> None:
@@ -33,7 +33,3 @@ class EnemyManager:
                 self.enemy_in_radius.append(enemy)
             elif not enemy.player_detected and enemy in self.enemy_in_radius:
                 self.enemy_in_radius.remove(enemy)
-
-    def collisions_with_player(self, x: int, y: int) -> bool:
-        """Checks if player collided with enemy"""
-        return any([(enemy.x, enemy.y) == (x, y) for enemy in self.enemy_list])

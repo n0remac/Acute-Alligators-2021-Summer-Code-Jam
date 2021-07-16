@@ -28,7 +28,8 @@ class GameResources:
         x = entity.new_positions["x"]
         y = entity.new_positions["y"]
         try:
-            if str(self.level.board[entity.y + y][entity.x + x]) in ("'", "$", "@", "#"):
+            if str(self.level.board[entity.y + y][entity.x + x]) in ("'", "@", "#") and \
+                    (entity.y + y, entity.x + x) != (self.player.y, self.player.x):
                 self.level.board[entity.y][entity.x] = entity.ground_symbol
                 entity.x += x
                 entity.y += y
@@ -53,6 +54,7 @@ class GameResources:
         # if player walks on door generate new level
         if str(self.level.board[self.player.y][self.player.x]) == "#":
             self.level = self.level_selector.create_level((self.player.y, self.player.x))
+            self.player.health = 100
             self.player.x = self.level.entrance[1]
             self.player.y = self.level.entrance[0]
 
@@ -65,6 +67,8 @@ class GameResources:
             self.update_entity(enemy)
 
         self.enemy_manager.enemies_detected()
+        for enemy_in_radius in self.enemy_manager.enemy_in_radius:
+            self.player.health -= enemy_in_radius.hit()
 
         if self.test_color_changer.collisions_with_player(self.player.x, self.player.y):
             self.test_color_changer.change_color(self.player)
@@ -75,7 +79,7 @@ class GameResources:
 
         The last drawn entities will appear on top of ones before it.
         """
-        if self.enemy_manager.collisions_with_player(self.player.x, self.player.y):
+        if self.player.health < 0:
             self.player.playing = False
         else:
             for enemy in self.enemy_manager.enemy_list:

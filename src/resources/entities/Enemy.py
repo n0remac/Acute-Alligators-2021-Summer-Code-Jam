@@ -1,4 +1,4 @@
-from random import choice
+from random import choice, randint
 
 from .AbstractDungeonEntity import AbstractDungeonEntity
 
@@ -13,6 +13,8 @@ class Enemy(AbstractDungeonEntity):
         self.target: dict = {}
         self.file = f"{file.name!r}"
         self.player_detected = False
+        # damage enemy attacked player for
+        self.damage_attacked_for = 0
 
     def mill(self) -> None:
         """Random enemy movement"""
@@ -43,20 +45,17 @@ class Enemy(AbstractDungeonEntity):
                     move_y = 1
                 if self.y > y:
                     move_y = -1
-            else:
-                # like a pawn, this can strike diagonally if the x and y abs values are the same
-                if self.x < x:
-                    move_x = 1
-                if self.x > x:
-                    move_x = -1
-                if self.y < y:
-                    move_y = 1
-                if self.y > y:
-                    move_y = -1
 
             # move in that direction
-            self.new_positions["x"] = move_x
-            self.new_positions["y"] = move_y
+            if x - self.aggro_radius <= self.x + self.new_positions["x"] <= x + self.aggro_radius:
+                self.new_positions["x"] = move_x
+            else:
+                self.new_positions["x"] = 0
+
+            if y - self.aggro_radius <= self.y + self.new_positions["y"] <= y + self.aggro_radius:
+                self.new_positions["y"] = move_y
+            else:
+                self.new_positions["y"] = 0
 
     def is_in_radius(self, x: int, y: int) -> bool:
         """Check if player is in 'aggro' radius"""
@@ -71,3 +70,10 @@ class Enemy(AbstractDungeonEntity):
             self.symbol.stylize("bold white")
             self.player_detected = False
             return False
+
+    def hit(self) -> int:
+        """Returns amount of damage that the player should be hit for"""
+        possible_hits = {"critical": randint(7, 10), "normal": randint(4, 6), "weak": randint(1, 3)}
+        hit_damage = possible_hits.get(choice(["critical", "normal", "weak"]), '')
+        self.damage_attacked_for = hit_damage
+        return hit_damage

@@ -19,4 +19,9 @@ class PanelLayout:
             Layout(name='footer', ratio=2)
         )
 
+        layout['footer'].split_column(
+            Layout(name="player_health", ratio=3),
+            Layout(name="display_enemies", ratio=6)
+        )
+
         return layout
