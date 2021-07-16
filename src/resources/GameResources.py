@@ -1,3 +1,7 @@
+import random
+
+from src.resources.constants import COLOR_CHANGER_CHOICES, PLAYER_COLOR_CHOICES
+
 from ..LevelSelector import LevelSelector
 from .entities.AbstractDungeonEntity import AbstractDungeonEntity
 from .entities.character import Character
@@ -12,7 +16,8 @@ class GameResources:
         self.level_selector = LevelSelector()
 
         self.level = self.level_selector.create_level()
-        self.player = Character(symbol="$", x=self.level.width // 2, y=self.level.height // 2)
+        self.player = Character(symbol="$", x=self.level.width // 2, y=self.level.height // 2,
+                                color=self._choose_random_color('character'))
 
         if bless:
             self.player.start()
@@ -95,3 +100,11 @@ class GameResources:
     def overlaps(self, first_entity: AbstractDungeonEntity, second_entity: AbstractDungeonEntity) -> bool:
         """Checks if two entities overlap"""
         return first_entity.x == second_entity.x and first_entity.x == second_entity.y
+
+    def _choose_random_color(self, entity: str = None) -> None:
+        """Selects random color"""
+        if entity == 'character':
+            color = random.choice(PLAYER_COLOR_CHOICES)
+        else:
+            color = random.choice(COLOR_CHANGER_CHOICES)
+        return color
