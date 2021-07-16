@@ -32,3 +32,14 @@ class Node:
             if child.path.name.startswith("."):
                 continue
             child.walk_dir(branch)
+
+    def display_node(self) -> None:
+        # create tree 
+        # populate with floor above 
+        # populate current room
+        # populate children 
+        tree = Tree(self.parent.path)
+        for child in self.parent.children:
+            if child.path.name.startswith("."):
+                continue
+            tree.add(child.path)
