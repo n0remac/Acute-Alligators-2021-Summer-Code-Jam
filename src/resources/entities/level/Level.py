@@ -3,6 +3,7 @@ from random import randint
 from rich.text import Text
 
 from src.fstree.Node import Node
+
 from .Door import Door
 from .Tile import Tile
 from .Wall import Wall
@@ -13,26 +14,28 @@ class Level:
 
     def __init__(self, width: int, height: int, cur_node: Node) -> None:
         self.entrance = (0, 0)
+        self.parent_door = (0, 0)
         self.board = []
         self.width = width
         self.height = height
         self.cur_node = cur_node
         self.doors = {}
 
-    def create_doors(self, entrance):
+    def create_doors(self, entrance: (int, int)) -> None:
+        """Creates a door given an entrance or generates a random door on the first iteration"""
         self.entrance = entrance
 
         if entrance != (0, 0):
-            door = {self.generate_entrance(): self.cur_node.parent}
+            parent_pos = self.generate_entrance(entrance)
+            door = {parent_pos: self.cur_node.parent}
             self.doors.update(door)
 
         for node in self.cur_node.children:
-            door = {self.generate_random_door(), node}
+            door = {self.generate_random_door(): node}
             self.doors.update(door)
 
     def generate_level(self) -> None:
         """Generates level"""
-
         for j in range(self.height):
             row = []
             for i in range(self.width):
@@ -48,7 +51,7 @@ class Level:
         adding_door = True
 
         while adding_door:
-            direction: int = randint(0, 3)
+            direction: int = randint(0, 2)
             if direction == 2:
                 y = randint(1, self.height - 2)
                 x = self.width - 1
@@ -61,14 +64,14 @@ class Level:
 
             if str(self.board[y][x]) != "#":
                 door = Door(text="#", style="bold green")
-                door.id = door_num
                 door.pos = (y, x)
                 self.board[y][x] = door
                 adding_door = False
 
         return y, x
 
-    def generate_entrance(self):
+    def generate_entrance(self, first_door: (int, int)) -> (int, int):
+        """Given a door generates the entrance on the other side of the level"""
         door = Door(text="#", style="bold green")
         y, x = first_door
         if first_door[0] == 0:
@@ -83,8 +86,6 @@ class Level:
         self.board[y][x] = door
 
         return y, x
-
-
 
     def add_doors(self, first_door: (int, int)) -> None:
         """Add doors to level"""
