@@ -48,7 +48,8 @@ class GameResources:
                 else:
                     entity.x += x
                     entity.y += y
-                entity.ground_symbol = self.level.board[entity.y][entity.x]
+                if entity.entity_type == "item":
+                    entity.ground_symbol = self.level.board[entity.y][entity.x]
                 entity.new_positions = {"x": 0, "y": 0}
         except IndexError:
             pass
@@ -85,9 +86,9 @@ class GameResources:
         if self.test_color_changer.collisions_with_player(self.player.x, self.player.y):
             self.test_color_changer.change_color(self.player)
 
-        if self.test_item.collected == False:
+        if self.test_item.collected is False:
             if self.test_item.collisions_with_player(self.player.x, self.player.y):
-                self.test_item.collect_item(self.level.board)
+                self.test_item.collect_item()
 
                 self.collected_items.append(self.test_item.symbol._text[0])
 
@@ -105,7 +106,7 @@ class GameResources:
             for enemy in self.enemy_manager.enemy_list:
                 self.draw_entity(enemy)
             self.draw_entity(self.test_color_changer)
-            if self.test_item.collected == False:
+            if self.test_item.collected is False:
                 self.draw_entity(self.test_item)
 
         self.draw_entity(self.player)
