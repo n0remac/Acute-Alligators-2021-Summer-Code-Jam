@@ -1,4 +1,4 @@
-from random import choice, randint
+from random import choice
 
 from .AbstractDungeonEntity import AbstractDungeonEntity
 
@@ -73,7 +73,8 @@ class Enemy(AbstractDungeonEntity):
 
     def hit(self) -> int:
         """Returns amount of damage that the player should be hit for"""
-        possible_hits = {"critical": randint(7, 10), "normal": randint(4, 6), "weak": randint(1, 3)}
-        hit_damage = possible_hits.get(choice(["critical", "normal", "weak"]), '')
-        self.damage_attacked_for = hit_damage
+        # possible_hits = {"critical": randint(7, 10), "normal": randint(4, 6), "weak": randint(1, 3)}
+        # hit_damage = possible_hits.get(choice(["critical", "normal", "weak"]), '')
+        # self.damage_attacked_for = hit_damage
+        hit_damage = 5
         return hit_damage
