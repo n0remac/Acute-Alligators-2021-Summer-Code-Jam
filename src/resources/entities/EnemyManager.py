@@ -28,8 +28,7 @@ class EnemyManager:
 
     def enemies_detected(self) -> None:
         """Gets all enemies in radius of a player"""
+        self.enemy_in_radius = []
         for enemy in self.enemy_list:
-            if enemy.player_detected and enemy not in self.enemy_in_radius:
+            if enemy.player_detected:
                 self.enemy_in_radius.append(enemy)
-            elif not enemy.player_detected and enemy in self.enemy_in_radius:
-                self.enemy_in_radius.remove(enemy)
