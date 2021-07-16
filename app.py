@@ -65,9 +65,14 @@ def run_game(layout: Layout, information: Information, game_resources: GameResou
     else:
 
         layout["display_enemies"].split_row(information.enemy_default_panel)
+
+    inventory = Text("\n".join(game_resources.collected_items))
+    layout["inventory"].update(Panel(inventory))
+
     layout["tree"].update(
         Panel(game_resources.node.display_node(), title="Current Location")
     )
+
     sleep(0.1)
 
 
@@ -87,6 +92,8 @@ def main() -> None:
     layout["tree"].update(
         Panel(game_resources.node.display_node(), title="Current Location")
     )
+
+    layout['inventory'].update(Panel('inventory'))
 
     start_screen()
 
