@@ -14,7 +14,7 @@ class Character(AbstractDungeonEntity):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.entity_type = "character"
+        self.ENTITY_TYPE = "character"
         self.playing = True
         self.commands = deque()
         self.health = 100
