@@ -1,6 +1,6 @@
 from src.resources.constants import TILE
 
-from .fstree.FileStructureTree import FileStructureTree
+from .fstree.filestructuretree import FileStructureTree
 from .LevelSelector import LevelSelector
 from .resources.entities.AbstractDungeonEntity import AbstractDungeonEntity
 from .resources.entities.character import Character

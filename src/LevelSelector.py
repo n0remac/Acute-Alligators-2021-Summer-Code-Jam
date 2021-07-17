@@ -1,4 +1,4 @@
-from .fstree.FileStructureTree import FileStructureTree
+from .fstree.filestructuretree import FileStructureTree
 from .resources.entities.level.Level import Level
 
 
