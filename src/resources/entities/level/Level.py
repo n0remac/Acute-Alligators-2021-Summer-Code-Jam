@@ -131,14 +131,15 @@ class Level:
 
     def spawn_dungeon_items(self, num: int) -> None:
         """Creates Dungeon items in random locations"""
-        while num > 0:
+        count = 0
+        while count < num:
             y = randint(2, self.height-2)
             x = randint(2, self.width-2)
 
             if str(self.board[y][x]) == "'":
                 item = Item(symbol="k", x=x, y=y, color="bold white")
                 self.items.append(item)
-                num -= 1
+                count += 1
 
     def remove_item(self, item: type) -> None:
         """Replace enemy with symbol"""
