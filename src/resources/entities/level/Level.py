@@ -10,7 +10,7 @@ from src.resources.entities.ColorChanger import ColorChanger
 from src.resources.entities.Item import Item
 
 from ..Enemy import Enemy
-from .Door import Door
+from .door import Door
 from .Tile import Tile
 from .Wall import Wall
 
