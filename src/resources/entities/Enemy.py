@@ -11,6 +11,7 @@ class Enemy(AbstractDungeonEntity):
         self.aggro_radius = aggro_radius
         self.entity_type = "enemy"
         self.target: dict = {}
+        self.player_detected = False
 
     def mill(self) -> None:
         """Random enemy movement"""
@@ -107,7 +108,9 @@ class Enemy(AbstractDungeonEntity):
                 (x - radius <= self.x <= x + radius):
             self.symbol.stylize("bold " + self.symbol.style)
             self.target = {'x': x, 'y': y}
+            self.player_detected = True
             return True
         else:
             self.symbol.stylize(self.symbol.style)
+            self.player_detected = False
             return False
