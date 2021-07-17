@@ -4,7 +4,7 @@ from threading import Thread
 from blessed import Terminal
 from pynput.keyboard import Key, Listener
 
-from .AbstractDungeonEntity import AbstractDungeonEntity
+from .abstractdungeonentity import AbstractDungeonEntity
 
 term = Terminal()
 
