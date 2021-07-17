@@ -6,8 +6,8 @@ from rich.text import Text
 
 from src.fstree.node import Node
 from src.resources.constants import COLOR_CHANGER_CHOICES, TILE
-from src.resources.entities.ColorChanger import ColorChanger
-from src.resources.entities.Item import Item
+from src.resources.entities.colorchanger import ColorChanger
+from src.resources.entities.item import Item
 
 from ..enemy import Enemy
 from .door import Door
