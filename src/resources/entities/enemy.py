@@ -1,6 +1,6 @@
 from random import choice
 
-from .AbstractDungeonEntity import AbstractDungeonEntity
+from .abstractdungeonentity import AbstractDungeonEntity
 
 
 class Enemy(AbstractDungeonEntity):

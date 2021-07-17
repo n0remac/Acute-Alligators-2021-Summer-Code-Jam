@@ -9,7 +9,7 @@ from src.resources.constants import COLOR_CHANGER_CHOICES, TILE
 from src.resources.entities.ColorChanger import ColorChanger
 from src.resources.entities.Item import Item
 
-from ..Enemy import Enemy
+from ..enemy import Enemy
 from .door import Door
 from .tile import Tile
 from .wall import Wall
