@@ -63,8 +63,8 @@ def run_game(layout: Layout, game_resources: GameResources) -> Panel:
 
     if game_resources.won_game:
         layout["tree"].update(
-        Panel("You have reached the bottom")
-    )
+            Panel("You have reached the bottom")
+        )
 
     inventory = Text("\n".join(game_resources.collected_items))
     print(inventory)
