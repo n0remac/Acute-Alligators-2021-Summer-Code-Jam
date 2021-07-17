@@ -137,8 +137,9 @@ class Level:
                 self.items.update(item_entry)
                 num -= 1
 
-    def spawn_random_enemies(self, num: int) -> None:
+    def spawn_random_enemies(self, files: list) -> None:
         """Spawns a new enemies randomly"""
+        num = len(files)
         while num > 0:
             y = randint(2, self.height - 2)
             x = randint(2, self.width - 2)
@@ -147,7 +148,7 @@ class Level:
             if str(self.board[y][x]) == TILE and \
                     x not in disallowed_spaces['x'] and y not in disallowed_spaces['y']:
                 num -= 1
-                enemy = Enemy(aggro_radius=3, x=x, y=y, symbol='^')
+                enemy = Enemy(aggro_radius=3, x=x, y=y, symbol='^', file=files[num-1])
                 enemy_entry = {id(enemy): enemy}
                 self.enemies.update(enemy_entry)
 
