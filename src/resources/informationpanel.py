@@ -24,9 +24,9 @@ class Information:
         enemy_panel_text = Text("")
         for enemy in self.enemy_list:
             if enemy.player_detected:
-                enemy_panel_text += Text(f"Enemy {enemy.file} detected you | ", style="bold red")
+                enemy_panel_text += Text(f"Enemy {enemy.file.name} detected you | ", style="bold red")
             else:
-                enemy_panel_text += Text(f"Enemy {enemy.file} | ")
+                enemy_panel_text += Text(f"Enemy {enemy.file.name} | ")
 
         enemy_panel = Panel(enemy_panel_text, title="Enemies")
         return enemy_panel
