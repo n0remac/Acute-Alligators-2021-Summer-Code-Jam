@@ -106,7 +106,7 @@ path = "."
 if __name__ == "__main__":
     testing = "--test" in sys.argv
     bless = "--bless" in sys.argv
-   
+
     try:
         for i, arg in enumerate(sys.argv):
             if "--path" in arg:
@@ -114,8 +114,6 @@ if __name__ == "__main__":
                 path = target if ospath.isdir(target) else "."
                 break
     except Exception:
-        pass
-
-    # print(testing, bless, path)
+        path = "."
 
     main()
