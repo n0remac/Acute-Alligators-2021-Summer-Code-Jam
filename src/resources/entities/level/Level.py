@@ -144,7 +144,6 @@ class Level:
         right = self.width - left
         bottom = math.floor(self.height * .33)
         top = self.height - bottom
-        
         while num > 0:
             y = randint(bottom, top)
             x = randint(left, right)
