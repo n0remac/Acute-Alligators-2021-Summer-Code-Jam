@@ -24,7 +24,7 @@ class PanelLayout:
                 Layout(name='inventory', ratio=3)
             )
             layout['Other_info'].split_column(
-                Layout(name='player_health', ratio=5),
+                Layout(name='player_health', ratio=4),
                 Layout(name='info', ratio=6)
             )
         else:
