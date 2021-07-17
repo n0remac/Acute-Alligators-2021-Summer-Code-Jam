@@ -11,8 +11,8 @@ from src.resources.entities.Item import Item
 
 from ..Enemy import Enemy
 from .door import Door
-from .Tile import Tile
-from .Wall import Wall
+from .tile import Tile
+from .wall import Wall
 
 
 class Level:
