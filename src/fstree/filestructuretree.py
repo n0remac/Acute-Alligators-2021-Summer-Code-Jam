@@ -2,7 +2,7 @@ from os import scandir
 
 from rich.tree import Tree
 
-from src.fstree.Node import Node
+from src.fstree.node import Node
 
 
 class FileStructureTree:
