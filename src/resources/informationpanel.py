@@ -1,7 +1,7 @@
 from rich.panel import Panel
 from rich.text import Text
 
-from src.GameResources import GameResources
+from src.gameresources import GameResources
 
 
 class Information:
