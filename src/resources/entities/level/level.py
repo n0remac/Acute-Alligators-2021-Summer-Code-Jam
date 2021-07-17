@@ -4,7 +4,7 @@ from random import choice, randint, shuffle
 from rich.console import Console
 from rich.text import Text
 
-from src.fstree.Node import Node
+from src.fstree.node import Node
 from src.resources.constants import COLOR_CHANGER_CHOICES, TILE
 from src.resources.entities.ColorChanger import ColorChanger
 from src.resources.entities.Item import Item
@@ -23,8 +23,8 @@ class Level:
         self.entrance = (0, 0)
         self.parent_door = (0, 0)
         self.board = []
-        self.width = 50
-        self.height = 20
+        self.width = width
+        self.height = height
         self.cur_node = cur_node
         self.doors = {}
         self.color_changers = []
