@@ -38,7 +38,6 @@ class Node:
 
     def display_node(self) -> None:
         """Displays current location in directory"""
-        
         if not isinstance(self.path, str):
             path = self.path.name + " <--"
         else:
