@@ -69,6 +69,7 @@ def run_game(layout: Layout, game_resources: GameResources) -> Panel:
     inventory = Text("\n".join(game_resources.collected_items))
     print(inventory)
     layout["inventory"].update(Panel(inventory))
+    layout["player_health"].update(layout["player_health"].split_row(Panel(Text("100 HP", style="green"))))
     sleep(0.1)
 
 
@@ -86,6 +87,7 @@ def main() -> None:
         Panel(game_resources.node.display_node(), title="Current Location")
     )
     layout['inventory'].update(Panel('inventory'))
+    layout["player_health"].update(layout["player_health"].split_row(Panel(Text("100 HP", style="green"))))
 
     start_screen()
 

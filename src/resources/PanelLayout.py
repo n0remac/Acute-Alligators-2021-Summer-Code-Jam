@@ -20,7 +20,8 @@ class PanelLayout:
                 Layout(name='footer', ratio=2)
             )
             layout['footer'].split_row(
-                Layout(name='Other_info', ratio=7),
+                Layout(name='Other_info', ratio=3),
+                Layout(name='player_health',ratio=3),
                 Layout(name='inventory', ratio=3)
             )
         else:
