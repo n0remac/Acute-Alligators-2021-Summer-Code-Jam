@@ -12,7 +12,6 @@ class Information:
         self.player = game_resources.player
         self.enemy_default_panel = Panel(Text("No enemies have detected you yet.", style="bold green"))
 
-
     def get_player_health(self) -> Panel:
         """Sets panel for player health"""
         health = self.player.health
