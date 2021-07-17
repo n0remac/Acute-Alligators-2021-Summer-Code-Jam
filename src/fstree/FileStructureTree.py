@@ -14,6 +14,7 @@ class FileStructureTree:
         self.root = Node(
             None, path
         )  # root node which holds references to all the other nodes in the tree
+        self.depth = 0
         self.add_node(self.root)
 
     def add_node(self, node: Node) -> None:
@@ -23,11 +24,16 @@ class FileStructureTree:
                 if entry.name.startswith('.') or entry.name.startswith('__'):
                     continue
                 if entry.is_dir():
-                    node.children.append(Node(node, entry))
+                    if len(node.children) > 50:
+                        pass
+                    else:
+                        node.children.append(Node(node, entry))
                 else:
                     node.files.append(entry)
         for child in node.children:
             self.add_node(child)
+            if child.depth > self.depth:
+                self.depth = child.depth
 
     def display(self) -> None:
         """Prints the entire folder structure using recursive calls to the node.display() method."""

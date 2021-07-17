@@ -7,6 +7,7 @@ from rich.panel import Panel
 from rich.text import Text
 
 from src.GameResources import GameResources
+from src.resources.informationpanel import Information
 from src.resources.PanelLayout import PanelLayout
 from src.resources.startscreen import StartScreen
 
@@ -44,7 +45,7 @@ def end_screen(layout: Layout) -> None:
         sleep(3)
 
 
-def run_game(layout: Layout, game_resources: GameResources) -> Panel:
+def run_game(layout: Layout, game_resources: GameResources, information: Information) -> Panel:
     """
     This function in in charge of running the game. It will call update and draw for each game object.
 
@@ -54,19 +55,27 @@ def run_game(layout: Layout, game_resources: GameResources) -> Panel:
     game_resources.draw()
 
     panel = Panel(game_resources.level.to_string())
-
     # Panels to update
     layout["main_game"].update(panel)
-    layout["footer"].update(Panel('footer'))
     layout["tree"].update(
         Panel(game_resources.node.display_node(), title="Current Location")
     )
-    sleep(0.1)
+
+    if game_resources.won_game:
+        layout["tree"].update(
+            Panel("You have reached the bottom")
+        )
+
+    inventory = Text("\n".join("{} X {}".format(k, v)for k, v in game_resources.collected_items.items()))
+    layout["inventory"].update(Panel(inventory))
+    layout["player_health"].update(information.get_player_health())
+    layout['info'].update(information.display_enemy_panel())
 
 
 def main() -> None:
     """Main function that sets up game and runs main game loop"""
     game_resources = GameResources(testing, bless)
+    information = Information(game_resources)
     game_resources.draw()
 
     game_panel = Panel(game_resources.level.to_string())
@@ -74,16 +83,19 @@ def main() -> None:
     layout["main_game"].update(game_panel)
 
     # Panels to update
-    layout["footer"].update(Panel('footer'))
     layout["tree"].update(
         Panel(game_resources.node.display_node(), title="Current Location")
     )
+    layout['inventory'].update(Panel('inventory'))
+    layout['info'].update(information.display_enemy_panel())
+    layout["player_health"].update(
+        (Panel(Text('♥'*10 + "   |   You have: 100HP", style="bold red"), title='Your Health')))
 
     start_screen()
 
-    with Live(layout, refresh_per_second=10, screen=False):
+    with Live(layout, refresh_per_second=10, screen=False):  # True prevents re-render
         while game_resources.player.playing:
-            run_game(layout, game_resources)
+            run_game(layout, game_resources, information)
         end_screen(layout)
 
 

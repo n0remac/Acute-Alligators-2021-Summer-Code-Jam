@@ -26,9 +26,12 @@ class LevelSelector:
                 level.entrance = exit
                 return level
 
-        level = Level(10, 15, self.cur)
+        level = Level(30, 40, self.cur)
         level.generate_level()
         level.create_doors(door)
+        level.spawn_random_changers()
+        level.spawn_dungeon_items(num=2)
+        level.spawn_random_enemies(files=self.cur.files)
 
         self.levels.update({id(self.cur): level})
 
