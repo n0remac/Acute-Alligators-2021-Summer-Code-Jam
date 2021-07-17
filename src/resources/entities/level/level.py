@@ -145,11 +145,17 @@ class Level:
         bottom = math.floor(self.height * .33)
         top = self.height - bottom
         while num > 0:
+            enemy_type = randint(0, 10)
+            enemy_symbol = "^"
+            agro = 3
+            if enemy_type > 7:
+                enemy_symbol = "!"
+                agro = 5
             y = randint(bottom, top)
             x = randint(left, right)
             if str(self.board[y][x]) == TILE:
                 num -= 1
-                enemy = Enemy(aggro_radius=3, x=x, y=y, symbol='^', file=files[num-1])
+                enemy = Enemy(aggro_radius=agro, x=x, y=y, symbol=enemy_symbol, file=files[num-1])
                 enemy_entry = {id(enemy): enemy}
                 self.enemies.update(enemy_entry)
 
