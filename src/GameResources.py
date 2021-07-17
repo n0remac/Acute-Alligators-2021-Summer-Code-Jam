@@ -121,7 +121,7 @@ class GameResources:
             for color_changer in self.level.color_changers:
                 self.draw_entity(color_changer)
 
-            if self.test_item.collected == False:
+            if self.test_item.collected:
                 self.draw_entity(self.test_item)
 
         self.draw_entity(self.player)
