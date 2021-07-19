@@ -1,5 +1,7 @@
 # Acute Aligators 2021 Python Discord Summer Code Jam
 
+![https://raw.githubusercontent.com/n0remac/Acute-Alligators-2021-Summer-Code-Jam/README/alligators1.png](Acute Aligators)
+
 ## Setup (tested on linux):
 Set up virtual enviroment: <br>
 `python3.9 -m venv venv` <br>
@@ -18,6 +20,7 @@ Playing in a different directory <br>
 Or using a relative path <br>
 `python app.py --path ../..`
 
+![https://raw.githubusercontent.com/n0remac/Acute-Alligators-2021-Summer-Code-Jam/README/dugeons-and-directories.png](Dungeons and Directories]
 
 ## Dungeons and Directories game play: <br>
 This is a rogue like game where the dungeon is built on your file directory. Each sub-directory is another room in the dungeon. The goal is to make it to the deepest depth of your file structure.
