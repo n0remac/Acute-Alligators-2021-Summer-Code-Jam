@@ -1,16 +1,16 @@
 from src.resources.constants import TILE
 
-from .fstree.FileStructureTree import FileStructureTree
-from .LevelSelector import LevelSelector
-from .resources.entities.AbstractDungeonEntity import AbstractDungeonEntity
+from .fstree.filestructuretree import FileStructureTree
+from .levelselector import LevelSelector
+from .resources.entities.abstractdungeonentity import AbstractDungeonEntity
 from .resources.entities.character import Character
 
 
 class GameResources:
     """Holds objects that are used for during game runtime"""
 
-    def __init__(self, testing: bool, bless: bool):
-        self.tree = FileStructureTree('.')
+    def __init__(self, testing: bool, bless: bool, path: str):
+        self.tree = FileStructureTree(path)
         self.node = self.tree.root
         self.level_selector = LevelSelector(self.tree)
 
@@ -147,7 +147,7 @@ class GameResources:
                     (entity.__class__.__name__ != 'Enemy' and str(
                         self.level.board[entity.y + y][entity.x + x]) == '#'):
                 self.level.board[entity.y][entity.x] = entity.ground_symbol
-                if entity.entity_type == "enemy":
+                if entity.ENTITY_TYPE == "enemy":
                     if entity.x + x > 0 and entity.y + y > 0:
                         entity.x += x
                         entity.y += y

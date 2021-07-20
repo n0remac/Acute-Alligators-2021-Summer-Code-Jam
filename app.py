@@ -1,4 +1,5 @@
 import sys
+from os import path as ospath
 from time import sleep
 
 from rich.layout import Layout
@@ -6,14 +7,14 @@ from rich.live import Live
 from rich.panel import Panel
 from rich.text import Text
 
-from src.GameResources import GameResources
+from src.gameresources import GameResources
 from src.resources.informationpanel import Information
-from src.resources.PanelLayout import PanelLayout
+from src.resources.panellayout import PanelLayout
 from src.resources.startscreen import StartScreen
 
 
 def start_screen() -> None:
-    """Start screen"""
+    """Start screen of the game, has a guide of how to play"""
     screen = StartScreen()
     layout_screen = screen.layout
     layout_screen.update(
@@ -58,7 +59,7 @@ def run_game(layout: Layout, game_resources: GameResources, information: Informa
     # Panels to update
     layout["main_game"].update(panel)
     layout["tree"].update(
-        Panel(game_resources.node.display_node(), title="Current Location")
+        Panel(game_resources.node.display_node(), title="Map")
     )
 
     if game_resources.won_game:
@@ -67,14 +68,21 @@ def run_game(layout: Layout, game_resources: GameResources, information: Informa
         )
 
     inventory = Text("\n".join("{} X {}".format(k, v)for k, v in game_resources.collected_items.items()))
-    layout["inventory"].update(Panel(inventory))
+    layout["inventory"].update(Panel(inventory, title="Inventory"))
     layout["player_health"].update(information.get_player_health())
     layout['info'].update(information.display_enemy_panel())
 
 
+def win_screen(layout: Layout) -> None:
+    """Win screen when the player wins"""
+    with open('winscreen.txt', 'r') as file:
+        panel = Panel(Text(''.join(file.readlines()), style="bold green", justify='full'))
+        layout.update(panel)
+
+
 def main() -> None:
     """Main function that sets up game and runs main game loop"""
-    game_resources = GameResources(testing, bless)
+    game_resources = GameResources(testing, bless, path)
     information = Information(game_resources)
     game_resources.draw()
 
@@ -84,26 +92,44 @@ def main() -> None:
 
     # Panels to update
     layout["tree"].update(
-        Panel(game_resources.node.display_node(), title="Current Location")
+        Panel(game_resources.node.display_node(), title="Map")
     )
-    layout['inventory'].update(Panel('inventory'))
+    layout['inventory'].update(Panel('', title="Inventory"))
     layout['info'].update(information.display_enemy_panel())
     layout["player_health"].update(
-        (Panel(Text('♥'*10 + "   |   You have: 100HP", style="bold red"), title='Your Health')))
+        (Panel(Text('♥'*10 + "   |   You have: 100HP", style="bold red"), title='Health')))
 
     start_screen()
 
     with Live(layout, refresh_per_second=10, screen=False):  # True prevents re-render
         while game_resources.player.playing:
             run_game(layout, game_resources, information)
-        end_screen(layout)
+            if game_resources.won_game:
+                game_resources.player.playing = False
+
+        if not game_resources.won_game:
+            end_screen(layout)
+
+    if game_resources.won_game:
+        layout = Layout(name="win")
+        with Live(layout, refresh_per_second=1, screen=False):
+            win_screen(layout)
 
 
 testing = False
 bless = False
+path = "."
 if __name__ == "__main__":
-    if sys.argv[-1] == "--test":
-        testing = True
-    elif sys.argv[-1] == "--bless":
-        bless = True
+    testing = "--test" in sys.argv
+    bless = "--bless" in sys.argv
+
+    try:
+        for i, arg in enumerate(sys.argv):
+            if "--path" in arg:
+                target = sys.argv[i + 1]
+                path = target if ospath.isdir(target) else "."
+                break
+    except Exception:
+        path = "."
+
     main()
